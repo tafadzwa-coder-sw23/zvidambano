@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zvidambano Trading - Agricultural Commodities</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Enable smooth scrolling for section transitions */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom styles for Inter font and general body */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f8fafc; /* Light gray background */
+            color: #1f2937; /* Default text color (gray-800) */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode specific styles */
+        html.dark body {
+            background-color: #1a202c; /* Dark background */
+            color: #e2e8f0; /* Light text color */
+        }
+
+        html.dark .bg-white {
+            background-color: #2d3748; /* Darker background for light cards/sections */
+        }
+
+        html.dark .bg-gray-50 {
+            background-color: #242c38; /* Slightly darker background for light gray sections */
+        }
+
+        html.dark .text-gray-800 {
+            color: #e2e8f0;
+        }
+
+        html.dark .text-gray-600 {
+            color: #cbd5e0;
+        }
+
+        html.dark .text-gray-700 {
+            color: #cbd5e0;
+        }
+
+        html.dark .text-gray-500 {
+            color: #a0aec0;
+        }
+
+        html.dark .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        html.dark .shadow-lg {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+        }
+
+        html.dark .shadow-xl {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        html.dark .border-gray-300 {
+            border-color: #4a5568;
+        }
+
+        html.dark .border-gray-200 {
+            border-color: #4a5568;
+        }
+
+        /* Ensure images are responsive */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Carousel specific styles - adjusted for Tailwind */
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            border-radius: 0.75rem; /* rounded-lg */
+            /* Removed overflow: hidden here, as it's handled by the parent section */
+        }
+        .carousel-inner img {
+            min-width: 100%; /* Each image takes up 100% of the carousel-inner's visible area */
+            flex-shrink: 0; /* Prevents images from shrinking */
+            object-fit: cover; /* Cover the container */
+            height: 500px; /* Fixed height for consistency */
+        }
+        /* No display: none for non-active images here, relying on translateX and overflow: hidden */
+
+        /* Custom animation for hero text */
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 1s ease-out forwards;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .animate-fade-in {
+            animation: fade-in 1.5s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+    </style>
+    <!-- Dark Mode Script (important to place in head to prevent FOUC) -->
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+            document.documentElement.classList.remove('light')
+        } else {
+            document.documentElement.classList.remove('dark')
+            document.documentElement.classList.add('light')
+        }
+    </script>
+</head>
+<body class="text-gray-800 dark:text-gray-200">
+
+    <!-- Header Section -->
+    <header class="bg-white dark:bg-gray-800 shadow-md p-4 sticky top-0 z-50 rounded-b-lg">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2 text-3xl font-extrabold text-green-700 dark:text-green-400">
+                <span class="text-yellow-500 dark:text-yellow-300">Zvidambano</span><span class="text-green-700 dark:text-green-400">Trading</span>
+            </a>
+
+            <!-- Navigation and Dark Mode Toggle (Mobile Toggle) -->
+            <div class="flex items-center md:hidden">
+                <!-- Dark Mode Toggle Button for Mobile -->
+                <button id="theme-toggle-mobile" class="text-gray-700 dark:text-gray-300 focus:outline-none p-2 rounded-md transition-colors duration-300 mr-2">
+                    <!-- Sun Icon for Light Mode -->
+                    <svg id="sun-icon-mobile" class="h-6 w-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h1M3 12h1m15.325-4.275l-.707-.707M4.375 19.325l-.707-.707m12.728 0l.707-.707M5.08 5.08l-.707-.707"></path>
+                    </svg>
+                    <!-- Moon Icon for Dark Mode -->
+                    <svg id="moon-icon-mobile" class="h-6 w-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+                <button id="menu-button" class="text-gray-700 dark:text-gray-300 focus:outline-none focus:text-gray-900 dark:focus:text-gray-100 p-2 rounded-md">
+                    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav id="nav-links" class="hidden md:flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 mt-4 md:mt-0 items-center">
+                <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400 transition-colors duration-300 font-medium rounded-md p-2">ABOUT</a>
+                <a href="#products" class="text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400 transition-colors duration-300 font-medium rounded-md p-2">PRODUCTS</a>
+                <a href="#clients" class="text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400 transition-colors duration-300 font-medium rounded-md p-2">KEY CLIENTS</a>
+                <a href="#team" class="text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400 transition-colors duration-300 font-medium rounded-md p-2">TEAM</a>
+                <a href="#testimonials" class="text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400 transition-colors duration-300 font-medium rounded-md p-2">TESTIMONIALS</a>
+                <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400 transition-colors duration-300 font-medium rounded-md p-2">CONTACT</a>
+                <div class="working-hours text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full shadow-inner hidden lg:block">
+                    Working Hours: Mon – Friday 08:00 to 17:00
+                </div>
+                <!-- Dark Mode Toggle Button for Desktop -->
+                <button id="theme-toggle-desktop" class="text-gray-700 dark:text-gray-300 focus:outline-none p-2 rounded-md transition-colors duration-300 ml-4">
+                    <!-- Sun Icon for Light Mode -->
+                    <svg id="sun-icon-desktop" class="h-6 w-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h1M3 12h1m15.325-4.275l-.707-.707M4.375 19.325l-.707-.707m12.728 0l.707-.707M5.08 5.08l-.707-.707"></path>
+                    </svg>
+                    <!-- Moon Icon for Dark Mode -->
+                    <svg id="moon-icon-desktop" class="h-6 w-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Carousel -->
+    <section class="relative w-full max-w-7xl mx-auto my-8 rounded-lg shadow-lg overflow-hidden">
+        <div class="carousel-inner" id="carousel-inner">
+            <!-- Images no longer have the 'hidden' class, allowing for translateX to manage visibility -->
+            <img src="images/download.jpeg" alt="Vast Grain Field Under Blue Sky">
+            <img src="images/wheat.jpeg" alt="Modern Grain Silos Against a Sunset">
+            <img src="images/harvestor.jpeg" alt="Tractor Harvesting Grain in a Field">
+        </div>
+        <button class="carousel-btn absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition-all duration-300 text-2xl" onclick="moveSlide(-1)" aria-label="Previous slide">&#x276E;</button>
+        <button class="carousel-btn absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition-all duration-300 text-2xl" onclick="moveSlide(1)" aria-label="Next slide">&#x276F;</button>
+        <div class="absolute inset-0 flex items-center justify-center text-white text-center p-8 bg-black bg-opacity-30">
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg animate-fade-in-up">
+                Your Trusted Partner in Zimbabwe's Grain Trade
+            </h1>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 md:py-24 bg-white dark:bg-gray-800 rounded-lg mx-auto my-8 shadow-lg max-w-7xl px-4">
+        <div class="container mx-auto flex flex-col md:flex-row items-center md:space-x-12">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <!-- Image is kept as per user's request -->
+                <img src="images/warehouse.jpeg" alt="Grain Storage Facility" class="rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300">
+            </div>
+            <div class="md:w-1/2">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-6">Welcome to Zvidambano Trading Zimbabwe</h2>
+                <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                    Zvidambano Trading is a premier agricultural company based in Zimbabwe, dedicated to optimizing the grain value chain from cultivation to consumption. We specialize in comprehensive grain storage solutions, robust trading operations, and efficient distribution networks across the entire region. Our unwavering commitment to quality, integrity, and sustainable practices underpins every aspect of our business.
+                </p>
+                <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                    Boasting state-of-the-art storage facilities, cutting-edge logistics, and a highly experienced team with years of invaluable expertise, we proudly serve a diverse clientele including small-scale farmers, large commercial producers, industrial millers, and various food businesses. We ensure that high-quality, safe, and traceable grains reach their destinations reliably and on time. We are deeply invested in the long-term growth and prosperity of Zimbabwe's agricultural sector, fostering partnerships that benefit all stakeholders.
+                </p>
+                <a href="#contact" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300">
+                    Get in Touch Today
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section (New) -->
+    <section id="why-choose-us" class="py-16 md:py-24 bg-gray-100 dark:bg-gray-700 rounded-lg mx-auto my-8 shadow-lg max-w-7xl px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-12">Why Choose Zvidambano Trading?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <h3 class="text-2xl font-semibold text-green-700 dark:text-green-400 mb-3">Unmatched Quality</h3>
+                    <p class="text-gray-700 dark:text-gray-300">We adhere to the strictest quality control standards, ensuring every grain meets superior benchmarks for purity and safety.</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <h3 class="text-2xl font-semibold text-green-700 dark:text-green-400 mb-3">Reliable Logistics</h3>
+                    <p class="text-gray-700 dark:text-gray-300">Our robust distribution network guarantees timely and secure delivery across Zimbabwe, minimizing delays and losses.</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <h3 class="text-2xl font-semibold text-green-700 dark:text-green-400 mb-3">Expert Team</h3>
+                    <p class="text-gray-700 dark:text-gray-300">Benefit from the insights and dedication of our seasoned professionals, committed to your success in the grain market.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-16 md:py-24 bg-gray-50 dark:bg-gray-900 rounded-lg mx-auto my-8 shadow-lg max-w-7xl px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-12">Our Products</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product 1: Maize -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                    <div class="text-green-600 dark:text-green-400 mb-4">
+                        <!-- Image is kept as per user's request -->
+                        <img src="images/maize.jpeg" alt="Maize Grains" class="mx-auto h-16 w-16 object-contain">
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Maize (Corn)</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        High-quality maize (corn) sourced directly from local farmers and large-scale producers. Our maize is ideal for milling, animal feed production, and various food industries, ensuring high nutritional value and consistent grain size. Essential for food security and industrial use in Zimbabwe.
+                    </p>
+                </div>
+                <!-- Product 2: Wheat -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                    <div class="text-green-600 dark:text-green-400 mb-4">
+                        <!-- Image is kept as per user's request -->
+                       <img src="images/wheat.jpeg" alt="Wheat Stalks" class="mx-auto h-16 w-16 object-contain">
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Wheat</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Premium milling wheat, carefully selected for its high protein content and excellent baking characteristics. Ideal for flour production for bakeries, pasta manufacturers, and various food processing companies, ensuring consistent quality.
+                    </p>
+                </div>
+                <!-- Product 3: Soybeans -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                    <div class="text-green-600 dark:text-green-400 mb-4">
+                        <!-- Image is kept as per user's request -->
+                       <img src="images/soya beans.jpeg" alt="Soya Beans" class="mx-auto h-16 w-16 object-contain">
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Soybeans</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Versatile soybeans supplied with stringent quality control. Perfect for oil extraction, protein-rich animal feed, and a wide range of food applications, including tofu and soy milk production. Our soybeans meet diverse market requirements.
+                    </p>
+                </div>
+                <!-- Product 4: Sorghum -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                    <div class="text-green-600 dark:text-green-400 mb-4">
+                        <!-- Image is kept as per user's request -->
+                       <img src="images/sourghum.jpeg" alt="Sorghum Grains" class="mx-auto h-16 w-16 object-contain">
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Sorghum</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Nutrient-rich sorghum, a drought-resilient crop and a staple in many traditional diets. Available for various market demands, including brewing, animal feed, and direct human consumption due to its gluten-free properties.
+                    </p>
+                </div>
+                <!-- Product 5: Pearl Millet -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                    <div class="text-green-600 dark:text-green-400 mb-4">
+                        <!-- Image is kept as per user's request -->
+                       <img src="images/milter.jpeg" alt="Pearl Millet Grains" class="mx-auto h-16 w-16 object-contain">
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Pearl Millet</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Highly nutritious and drought-resistant pearl millet, a key grain for food and feed applications, especially in arid regions. Sourced responsibly to ensure consistent supply and exceptional quality for our clients.
+                    </p>
+                </div>
+                <!-- Product 6: Groundnuts -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                    <div class="text-green-600 dark:text-green-400 mb-4">
+                        <!-- Image is kept as per user's request -->
+                       <img src="images/nuts.jpeg" alt="Groundnuts (Peanuts)" class="mx-auto h-16 w-16 object-contain">
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Groundnuts (Peanuts)</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        High-quality groundnuts for snacking, oil production, and confectionery. Our groundnuts meet diverse market requirements, known for their rich flavor and high oil content, delivered with full traceability.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Clients Section -->
+    <section id="clients" class="py-16 md:py-24 bg-white dark:bg-gray-800 rounded-lg mx-auto my-8 shadow-lg max-w-7xl px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-12">Our Key Clients</h2>
+            <p class="text-lg text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+                We are proud to partner with leading organizations across various industries, building strong and lasting relationships based on trust and exceptional service. Our client success is our priority.
+            </p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 lg:gap-16">
+                <!-- Client Logos are kept as per user's request -->
+                <img src="images/national foods.png" alt="National Foods Logo" class="h-20 max-w-[150px] object-contain transform hover:scale-110 transition-transform duration-300 rounded-md">
+                <img src="images/zim pride.jpeg" alt="Zim Pride Logo" class="h-20 max-w-[150px] object-contain transform hover:scale-110 transition-transform duration-300 rounded-md">
+                <img src="images/ngoda.png" alt="Ngoda Logo" class="h-20 max-w-[150px] object-contain transform hover:scale-110 transition-transform duration-300 rounded-md">
+                <img src="images/zim meal.jpeg" alt="Zim Meal Logo" class="h-20 max-w-[150px] object-contain transform hover:scale-110 transition-transform duration-300 rounded-md">
+                <img src="images/zimgold.jpeg" alt="Zim Gold Logo" class="h-20 max-w-[150px] object-contain transform hover:scale-110 transition-transform duration-300 rounded-md">
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 md:py-24 bg-gray-50 dark:bg-gray-900 rounded-lg mx-auto my-8 shadow-lg max-w-7xl px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-12">What Our Valued Clients Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col items-center">
+                    <!-- Image is kept as per user's request -->
+                    <img src="https://placehold.co/80x80/a0aec0/ffffff?text=Client1" alt="Client Avatar 1" class="w-20 h-20 rounded-full mb-4 object-cover border-4 border-yellow-500">
+                    <p class="text-lg text-gray-700 dark:text-gray-300 italic mb-4">
+                        "Zvidambano Trading has consistently provided us with top-quality maize and exceptional service. Their logistics are flawless, ensuring our operations run smoothly and our supply chain is never interrupted. A truly reliable partner!"
+                    </p>
+                    <p class="font-semibold text-gray-800 dark:text-gray-100">- Sarah M., CEO of Harvest Mills</p>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col items-center">
+                    <!-- Image is kept as per user's request -->
+                    <img src="https://placehold.co/80x80/a0aec0/ffffff?text=Client2" alt="Client Avatar 2" class="w-20 h-20 rounded-full mb-4 object-cover border-4 border-yellow-500">
+                    <p class="text-lg text-gray-700 dark:text-gray-300 italic mb-4">
+                        "Their team's market insights are invaluable. Zvidambano Trading helps us make informed purchasing decisions, giving us a competitive edge in a dynamic market. We appreciate their transparent communication and expertise."
+                    </p>
+                    <p class="font-semibold text-gray-800 dark:text-gray-100">- David L., Procurement Manager, AgriFood Co.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Insights / News Section (New) -->
+    <section id="news" class="py-16 md:py-24 bg-white dark:bg-gray-800 rounded-lg mx-auto my-8 shadow-lg max-w-7xl px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-12">Latest Market Insights & News</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- News Article 1 -->
+                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-left">
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">Zimbabwe's Maize Harvest Prospects for 2025</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Published: June 18, 2025</p>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">
+                        Early indications suggest a promising maize harvest for 2025, driven by favorable weather patterns and increased farmer support programs. Zvidambano Trading is actively monitoring regional forecasts to ensure stable supply for our partners.
+                    </p>
+                    <a href="#" class="text-green-600 dark:text-green-400 hover:underline font-medium">Read More &rarr;</a>
+                </div>
+                <!-- News Article 2 -->
+                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-left">
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">Global Wheat Prices: Impact on Local Markets</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Published: June 10, 2025</p>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">
+                        We delve into how global wheat price fluctuations are influencing Zimbabwe's local market, providing analysis on import/export dynamics and their potential effects on consumers and producers.
+                    </p>
+                    <a href="#" class="text-green-600 dark:text-green-400 hover:underline font-medium">Read More &rarr;</a>
+                </div>
+            </div>
+            <a href="#" class="inline-block mt-12 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300">
+                View All Insights
+            </a>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-16 md:py-24 bg-white dark:bg-gray-800 rounded-lg mx-auto my-8 shadow-lg max-w-7xl px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-12">Meet Our Expert Team</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Team Member 1 -->
+                <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                    <!-- Image is kept as per user's request -->
+                    <img src="https://placehold.co/150x150/d1d5db/4b5563?text=Jane+Doe" alt="Photo of Jane Doe" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-green-500 dark:border-green-400">
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Jane Doe</h3>
+                    <p class="text-green-600 dark:text-green-400 font-medium mb-3">CEO & Founder</p>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">
+                        With over 20 years in agricultural commodities, Jane leads Zvidambano Trading with vision, strategic insight, and a deep understanding of global and local market dynamics. She is committed to sustainable growth and fostering strong partnerships.
+                    </p>
+                </div>
+                <!-- Team Member 2 -->
+                <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                    <!-- Image is kept as per user's request -->
+                    <img src="https://placehold.co/150x150/d1d5db/4b5563?text=John+Smith" alt="Photo of John Smith" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-green-500 dark:border-green-400">
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">John Smith</h3>
+                    <p class="text-green-600 dark:text-green-400 font-medium mb-3">Head of Operations</p>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">
+                        John ensures seamless logistics and efficient supply chain management, from procurement to timely delivery. His expertise in operational excellence guarantees reliability for our clients.
+                    </p>
+                </div>
+                <!-- Team Member 3 -->
+                <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                    <!-- Image is kept as per user's request -->
+                    <img src="https://placehold.co/150x150/d1d5db/4b5563?text=Emily+Brown" alt="Photo of Emily Brown" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-green-500 dark:border-green-400">
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Emily Brown</h3>
+                    <p class="text-green-600 dark:text-green-400 font-medium mb-3">Market Analyst</p>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">
+                        Emily provides crucial market insights and forecasting, leveraging data to guide strategic trading decisions and keep our clients informed on market trends and opportunities.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact" class="py-16 md:py-24 bg-gray-50 dark:bg-gray-900 rounded-lg mx-auto my-8 shadow-lg max-w-7xl px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-12">Contact Zvidambano Trading Zimbabwe</h2>
+            <p class="text-lg text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+                We're here to help with your grain trading needs. Reach out to us through the form below or using our direct contact details for a prompt response.
+            </p>
+            <div class="max-w-xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+                <form class="space-y-6">
+                    <div>
+                        <label for="contact-name" class="block text-left text-sm font-medium text-gray-700 dark:text-gray-300">Your Name</label>
+                        <input type="text" id="contact-name" name="name" class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" placeholder="Your Full Name" required>
+                    </div>
+                    <div>
+                        <label for="contact-email" class="block text-left text-sm font-medium text-gray-700 dark:text-gray-300">Email Address</label>
+                        <input type="email" id="contact-email" name="email" class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" placeholder="your.email@example.com" required>
+                    </div>
+                    <div>
+                        <label for="contact-subject" class="block text-left text-sm font-medium text-gray-700 dark:text-gray-300">Subject</label>
+                        <input type="text" id="contact-subject" name="subject" class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" placeholder="Inquiry Type (e.g., Quote Request, Partnership)">
+                    </div>
+                    <div>
+                        <label for="contact-message" class="block text-left text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
+                        <textarea id="contact-message" name="message" rows="5" class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" placeholder="Type your detailed message here..." required></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md shadow-lg transition-colors duration-300 transform hover:scale-105">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="mt-12 text-center text-gray-600 dark:text-gray-400">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Our Details</h3>
+                <p class="mb-2">
+                    <svg class="inline-block h-5 w-5 mr-2 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M14.414 10L10 5.586 11.414 4 17 9.586V10h-2V6.414L10.414 12 9 10.586 14.414 5H10V3h7a1 1 0 011 1v7h-2V6.414zM10 18a8 8 0 100-16 8 8 0 000 16zm-4.293-9.293a1 1 0 011.414 0L10 10.586l2.879-2.879a1 1 0 111.414 1.414L11.414 12l2.879 2.879a1 1 0 01-1.414 1.414L10 13.414l-2.879 2.879a1 1 0 01-1.414-1.414L8.586 12l-2.879-2.879a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                    Phone:</strong> +263 776571481
+                </p>
+                <p class="mb-2">
+                    <svg class="inline-block h-5 w-5 mr-2 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                    Email:</strong> info@Zvidambano.co.zw
+                </p>
+                <p class="mb-2">
+                    <svg class="inline-block h-5 w-5 mr-2 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                    Address:</strong> 123 Grain Street, Harare, Zimbabwe
+                </p>
+                <p class="mt-4">
+                    <svg class="inline-block h-5 w-5 mr-2 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 10.586V6z" clip-rule="evenodd"></path></svg>
+                    Working Hours:</strong> Monday – Friday, 08:00 to 17:00
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 dark:bg-gray-950 text-white py-8 rounded-t-lg">
+        <div class="container mx-auto px-4 text-center text-sm md:flex md:justify-between md:items-center">
+            <p>&copy; 2025 Zvidambano Trading. All rights reserved.</p>
+            <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 mt-4 md:mt-0">
+                <a href="#" class="text-gray-300 hover:text-white transition-colors duration-300">Privacy Policy</a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors duration-300">Terms of Service</a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors duration-300">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu Toggle and Carousel -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuButton = document.getElementById('menu-button');
+            const navLinks = document.getElementById('nav-links');
+
+            if (menuButton && navLinks) {
+                menuButton.addEventListener('click', function() {
+                    navLinks.classList.toggle('hidden');
+                    navLinks.classList.toggle('flex');
+                });
+
+                // Close menu when a link is clicked (for smooth scrolling on mobile)
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth < 768) { // Only hide on small screens
+                            navLinks.classList.add('hidden');
+                            navLinks.classList.remove('flex');
+                        }
+                    });
+                });
+            }
+
+            // Dark Mode Toggle Functionality
+            const themeToggleDesktop = document.getElementById('theme-toggle-desktop');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+
+            function toggleTheme() {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.classList.add('light');
+                    localStorage.theme = 'light';
+                } else {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.classList.remove('light');
+                    localStorage.theme = 'dark';
+                }
+                updateThemeIcons();
+            }
+
+            function updateThemeIcons() {
+                const isDarkMode = document.documentElement.classList.contains('dark');
+                const sunIcons = document.querySelectorAll('#sun-icon-desktop, #sun-icon-mobile');
+                const moonIcons = document.querySelectorAll('#moon-icon-desktop, #moon-icon-mobile');
+
+                sunIcons.forEach(icon => {
+                    if (isDarkMode) {
+                        icon.classList.remove('hidden');
+                        icon.classList.add('block');
+                    } else {
+                        icon.classList.add('hidden');
+                        icon.classList.remove('block');
+                    }
+                });
+
+                moonIcons.forEach(icon => {
+                    if (isDarkMode) {
+                        icon.classList.add('hidden');
+                        icon.classList.remove('block');
+                    } else {
+                        icon.classList.remove('hidden');
+                        icon.classList.add('block');
+                    }
+                });
+            }
+
+            if (themeToggleDesktop) {
+                themeToggleDesktop.addEventListener('click', toggleTheme);
+            }
+            if (themeToggleMobile) {
+                themeToggleMobile.addEventListener('click', toggleTheme);
+            }
+
+            // Initial icon update on page load
+            updateThemeIcons();
+
+
+            // Carousel functionality
+            const carouselInner = document.getElementById('carousel-inner');
+            const images = carouselInner.querySelectorAll('img');
+            let currentIndex = 0;
+
+            // Function to update the carousel display
+            function updateCarousel() {
+                carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+
+            // Initial display - only call updateCarousel
+            updateCarousel();
+
+
+            // Function to move slide
+            window.moveSlide = function(direction) {
+                currentIndex = (currentIndex + direction + images.length) % images.length;
+                updateCarousel();
+            }
+
+            // Auto advance slides - set to 5 seconds (5000ms)
+            setInterval(() => moveSlide(1), 5000);
+        });
+    </script>
+</body>
+</html>
