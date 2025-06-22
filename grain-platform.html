@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zvidambano Trading</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* General Body and Container Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6; /* Light gray background */
+            color: #1f2937; /* Dark gray text */
+            display: flex;
+            flex-direction: column; /* Allow header and content to stack */
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark {
+            background-color: #111827; /* Dark background */
+            color: #f9fafb; /* Light text */
+        }
+
+        /* Header and Navigation Bar Styles */
+        .header-container {
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            position: sticky; /* Keep header visible */
+            top: 0;
+            z-index: 40; /* Below modals */
+        }
+
+        body.dark .header-container {
+            background-color: #1f2937;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.75rem; /* 28px */
+            font-weight: 800;
+            color: #4f46e5; /* Indigo 700 */
+        }
+        body.dark .navbar-brand {
+            color: #818cf8; /* Indigo 400 */
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #374151; /* Gray 700 */
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            display: flex; /* For dark mode icon */
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.dark .nav-btn {
+            color: #d1d5db; /* Gray 300 */
+        }
+
+        .nav-btn:hover {
+            background-color: #e5e7eb; /* Gray 200 */
+            color: #1f2937; /* Gray 800 */
+        }
+        body.dark .nav-btn:hover {
+            background-color: #4b5563; /* Gray 600 */
+            color: #f3f4f6; /* Light gray */
+        }
+
+        .dark-mode-toggle-btn {
+            padding: 8px; /* Square button for icon */
+        }
+
+        /* Main Content Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 24px;
+            box-sizing: border-box;
+            flex-grow: 1; /* Allow content to fill available space */
+        }
+
+        /* Card-like Sections */
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.dark .card {
+            background-color: #1f2937;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-inner {
+            background-color: #f9fafb;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark .card-inner {
+            background-color: #374151;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Headings */
+        h1, h2, h3, h4, h5 {
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 3rem; /* 48px */
+            color: #4f46e5; /* Indigo 700 */
+        }
+        body.dark h1 {
+            color: #818cf8; /* Indigo 400 */
+        }
+
+        h2 {
+            font-size: 2.25rem; /* 36px */
+            color: #4f46e5;
+        }
+        body.dark h2 {
+            color: #818cf8;
+        }
+
+        h3 {
+            font-size: 1.875rem; /* 30px */
+            color: #4f46e5;
+        }
+        body.dark h3 {
+            color: #a5b4fc; /* Indigo 300 */
+        }
+
+        h4 {
+            font-size: 1.5rem; /* 24px */
+            color: #1f2937;
+        }
+        body.dark h4 {
+            color: #f3f4f6;
+        }
+
+        h5 {
+            font-size: 1.25rem; /* 20px */
+            color: #6366f1; /* Indigo 500 */
+        }
+        body.dark h5 {
+            color: #a5b4fc;
+        }
+
+        /* Paragraphs and Text */
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .text-lg {
+            font-size: 1.125rem; /* 18px */
+        }
+
+        .text-xl {
+            font-size: 1.25rem; /* 20px */
+        }
+
+        .text-sm {
+            font-size: 0.875rem; /* 14px */
+        }
+
+        .text-xs {
+            font-size: 0.75rem; /* 12px */
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            font-weight: 700;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background-color: #2563eb; /* Blue 600 */
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8; /* Blue 700 */
+        }
+
+        .btn-success {
+            background-color: #10b981; /* Green 600 */
+        }
+        .btn-success:hover {
+            background-color: #059669; /* Green 700 */
+        }
+
+        .btn-info {
+            background-color: #a855f7; /* Purple 600 */
+        }
+        .btn-info:hover {
+            background-color: #9333ea; /* Purple 700 */
+        }
+
+        .btn-danger {
+            background-color: #ef4444; /* Red 500 */
+        }
+        .btn-danger:hover {
+            background-color: #dc2626; /* Red 600 */
+        }
+
+        .btn-secondary {
+            background-color: #6b7280; /* Gray 500 */
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #4b5563; /* Gray 600 */
+        }
+
+        .btn-light {
+            background-color: #d1d5db; /* Gray 300 */
+            color: #1f2937;
+        }
+        .btn-light:hover {
+            background-color: #9ca3af; /* Gray 400 */
+        }
+
+        .btn-warning {
+            background-color: #eab308; /* Yellow 600 */
+            color: white;
+        }
+        .btn-warning:hover {
+            background-color: #ca8a04; /* Yellow 700 */
+        }
+
+
+        /* Form Elements */
+        input[type="text"],
+        input[type="number"],
+        input[type="password"], /* Added for password input */
+        textarea,
+        select {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db; /* Gray 300 */
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #1f2937;
+            background-color: #ffffff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="password"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #6366f1; /* Indigo 500 */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); /* Indigo 500 with opacity */
+        }
+
+        body.dark input[type="text"],
+        body.dark input[type="number"],
+        body.dark input[type="password"],
+        body.dark textarea,
+        body.dark select {
+            background-color: #374151; /* Gray 700 */
+            color: #f3f4f6;
+            border-color: #4b5563; /* Gray 600 */
+        }
+        body.dark input[type="text"]:focus,
+        body.dark input[type="number"]:focus,
+        body.dark input[type="password"]:focus,
+        body.dark textarea:focus,
+        body.dark select:focus {
+            border-color: #818cf8; /* Indigo 400 */
+            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3);
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151; /* Gray 700 */
+        }
+        body.dark label {
+            color: #d1d5db; /* Gray 300 */
+        }
+
+        /* Form Validation Specific Styles */
+        input.is-invalid, textarea.is-invalid, select.is-invalid {
+            border-color: #ef4444; /* Red 500 */
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+
+        .error-message {
+            color: #dc2626; /* Red 600 */
+            font-size: 0.875rem; /* text-sm */
+            margin-top: 4px; /* mt-1 */
+            margin-bottom: 8px; /* mb-2 */
+            display: block;
+        }
+
+        /* Grid Layout (for forms and product lists) */
+        .grid {
+            display: grid;
+            gap: 16px; /* 1rem */
+        }
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .md\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .lg\:grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+        .col-span-full {
+            grid-column: 1 / -1;
+        }
+
+        /* Flexbox Utilities */
+        .flex {
+            display: flex;
+        }
+        .flex-col {
+            flex-direction: column;
+        }
+        .flex-row {
+            flex-direction: row;
+        }
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+        .justify-center {
+            justify-content: center;
+        }
+        .justify-end {
+            justify-content: flex-end;
+        }
+        .justify-between {
+            justify-content: space-between;
+        }
+        .items-center {
+            align-items: center;
+        }
+        .items-end {
+            align-items: flex-end;
+        }
+        .flex-1 {
+            flex: 1 1 0%;
+        }
+        .flex-grow {
+            flex-grow: 1;
+        }
+
+        /* Spacing */
+        .p-4 { padding: 16px; }
+        .p-6 { padding: 24px; }
+        .p-8 { padding: 32px; }
+        .py-2 { padding-top: 8px; padding-bottom: 8px; }
+        .py-3 { padding-top: 12px; padding-bottom: 12px; }
+        .py-4 { padding-top: 16px; padding-bottom: 16px; }
+        .px-1 { padding-left: 4px; padding-right: 4px; }
+        .px-3 { padding-left: 12px; padding-right: 12px; }
+        .px-4 { padding-left: 16px; padding-right: 16px; }
+        .px-6 { padding-left: 24px; padding-right: 24px; }
+        .px-8 { padding-left: 32px; padding-right: 32px; }
+        .mb-2 { margin-bottom: 8px; }
+        .mb-3 { margin-bottom: 12px; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-6 { margin-bottom: 24px; }
+        .mb-8 { margin-bottom: 32px; }
+        .mb-10 { margin-bottom: 40px; }
+        .mt-1 { margin-top: 4px; }
+        .mt-4 { margin-top: 16px; }
+        .mt-6 { margin-top: 24px; }
+        .mt-8 { margin-top: 32px; }
+        .gap-2 { gap: 8px; }
+        .gap-4 { gap: 16px; }
+        .gap-6 { gap: 24px; }
+        .space-y-3 > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 12px;
+        }
+        .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 16px;
+        }
+        .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 24px;
+        }
+
+
+        /* Borders */
+        .border { border-width: 1px; border-style: solid; border-color: #d1d5db; /* Gray 300 */ }
+        body.dark .border { border-color: #4b5563; /* Gray 600 */ }
+
+        .border-b { border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #e5e7eb; /* Gray 200 */ }
+        body.dark .border-b { border-bottom-color: #374151; /* Gray 700 */ }
+
+        .border-t { border-top-width: 1px; border-top-style: solid; border-top-color: #e5e7eb; /* Gray 200 */ }
+        body.dark .border-t { border-top-color: #4b5563; /* Gray 600 */ }
+
+        /* Text Colors */
+        .text-indigo-700 { color: #4f46e5; }
+        .text-indigo-600 { color: #4f46e5; }
+        .text-indigo-500 { color: #6366f1; }
+        .text-yellow-600 { color: #d97706; }
+        .text-blue-600 { color: #2563eb; }
+        .text-green-600 { color: #10b981; }
+        .text-red-600 { color: #dc2626; }
+        .text-gray-500 { color: #6b7280; }
+        .text-gray-600 { color: #4b5563; }
+        .text-gray-700 { color: #374151; }
+        .text-gray-800 { color: #1f2937; }
+
+        body.dark .text-indigo-400 { color: #818cf8; }
+        body.dark .text-indigo-300 { color: #a5b4fc; }
+        body.dark .text-gray-100 { color: #f9fafb; }
+        body.dark .text-gray-200 { color: #e5e7eb; }
+        body.dark .text-gray-300 { color: #d1d5db; }
+        body.dark .text-gray-400 { color: #9ca3af; }
+
+        /* Background Colors */
+        .bg-white { background-color: #ffffff; }
+        .bg-gray-100 { background-color: #f3f4f6; }
+        .bg-gray-50 { background-color: #f9fafb; }
+        .bg-blue-600 { background-color: #2563eb; }
+        .bg-green-600 { background-color: #10b981; }
+        .bg-purple-600 { background-color: #a855f7; }
+        .bg-red-500 { background-color: #ef4444; }
+        .bg-green-500 { background-color: #22c55e; }
+        .bg-blue-500 { background-color: #3b82f6; }
+        .bg-yellow-500 { background-color: #f59e0b; }
+        .bg-gray-200 { background-color: #e5e7eb; }
+        .bg-gray-300 { background-color: #d1d5db; }
+        .bg-gray-500 { background-color: #6b7280; }
+        .bg-black { background-color: rgba(0, 0, 0, 1); }
+        .bg-opacity-50 { background-color: rgba(0, 0, 0, 0.5); }
+
+        body.dark .bg-gray-900 { background-color: #111827; }
+        body.dark .bg-gray-800 { background-color: #1f2937; }
+        body.dark .bg-gray-700 { background-color: #374151; }
+        body.dark .bg-gray-600 { background-color: #4b5563; }
+        body.dark .bg-gray-500 { background-color: #6b7280; }
+
+        /* Other Utilities */
+        .rounded-lg { border-radius: 8px; }
+        .rounded-xl { border-radius: 12px; }
+        .rounded-full { border-radius: 9999px; }
+        .rounded-t-lg { border-top-left-radius: 8px; border-top-right-radius: 8px; }
+        .shadow { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06); }
+        .shadow-md { box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); }
+        .shadow-lg { box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); }
+        .shadow-xl { box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1), 0 8px 10px rgba(0, 0, 0, 0.04); }
+        .shadow-2xl { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25); }
+        .shadow-inner { box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06); }
+
+        .min-h-screen { min-height: 100vh; }
+        .w-full { width: 100%; }
+        .max-w-md { max-width: 480px; }
+        .max-w-sm { max-width: 384px; }
+        .text-center { text-align: center; }
+        .block { display: block; }
+        .capitalize { text-transform: capitalize; }
+        .fixed { position: fixed; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+        .bottom-4 { bottom: 16px; }
+        .right-4 { right: 16px; }
+        .z-50 { z-index: 50; }
+        .z-\[100\] { z-index: 100; } /* Custom z-index */
+
+        /* Transitions & Transforms */
+        .transition-transform { transition-property: transform; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 300ms; }
+        .transition-colors { transition-property: background-color, border-color, color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 300ms; }
+        .transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 300ms; }
+        .duration-300 { transition-duration: 300ms; }
+        .ease-in-out { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover\:scale-105:hover { transform: scale(1.05); }
+        .hover\:shadow-lg:hover { box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); }
+        .focus\:outline-none:focus { outline: 2px solid transparent; outline-offset: 2px; }
+        .focus\:ring-4:focus { box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.5); /* example color */ } /* Adjusted for general focus */
+        .focus\:ring-blue-300:focus { box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.5); }
+        .focus\:ring-green-300:focus { box-shadow: 0 0 0 4px rgba(134, 239, 172, 0.5); }
+        .focus\:ring-purple-300:focus { box-shadow: 0 0 0 4px rgba(212, 163, 255, 0.5); }
+
+        /* Specific styles for responsive tabs in Admin dashboard */
+        .nav-tabs {
+            border-bottom: 2px solid #e5e7eb;
+            margin-bottom: 32px;
+            display: flex;
+            gap: 32px; /* space-x-8 (8 * 4px = 32px) */
+            overflow-x: auto; /* Allow horizontal scrolling on small screens if tabs overflow */
+            -webkit-overflow-scrolling: touch; /* smoother scrolling on iOS */
+        }
+        body.dark .nav-tabs {
+            border-bottom-color: #374151;
+        }
+
+        .nav-tabs button {
+            white-space: nowrap;
+            padding: 16px 4px; /* py-4 px-1 */
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+            font-size: 1.125rem; /* text-lg */
+            color: #6b7280; /* gray-500 */
+            background: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .nav-tabs button.active {
+            border-color: #6366f1; /* indigo-500 */
+            color: #4f46e5; /* indigo-600 */
+        }
+        body.dark .nav-tabs button.active {
+            border-color: #818cf8; /* indigo-400 */
+            color: #818cf8;
+        }
+
+        .nav-tabs button:hover {
+            color: #374151; /* gray-700 */
+            border-color: #d1d5db; /* gray-300 */
+        }
+        body.dark .nav-tabs button:hover {
+            color: #d1d5db; /* gray-300 */
+            border-color: #4b5563; /* gray-600 */
+        }
+
+        /* Responsive adjustments for flex items in dashboard rows */
+        @media (max-width: 767px) {
+            .flex-col-md-row {
+                flex-direction: column;
+            }
+            .mb-2-md-0 {
+                margin-bottom: 8px; /* mb-2 */
+            }
+        }
+        @media (min-width: 768px) {
+            .flex-col-md-row {
+                flex-direction: row;
+            }
+            .mb-2-md-0 {
+                margin-bottom: 0;
+            }
+        }
+
+        /* Notification Styles */
+        #notification-container {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none; /* Allow clicks to pass through */
+        }
+
+        .notification {
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transform: translateX(100%);
+            animation: slideIn 0.3s forwards, fadeOut 0.5s forwards var(--duration, 3s);
+            pointer-events: auto; /* Re-enable clicks on notification itself */
+        }
+
+        .notification.success { background-color: #22c55e; } /* Green 500 */
+        .notification.error { background-color: #ef4444; }   /* Red 500 */
+        .notification.warning { background-color: #f59e0b; } /* Yellow 500 */
+        .notification.info { background-color: #3b82f6; }    /* Blue 500 */
+
+        /* SVG icon styling within notifications */
+        .notification svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Bar chart styling for analytics */
+        .bar-chart-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            height: 192px; /* h-48 */
+            width: 100%;
+            max-width: 384px; /* max-w-sm */
+            margin: 0 auto;
+            gap: 4px;
+        }
+
+        .bar-chart-bar {
+            flex: 1;
+            background-color: #d1d5db; /* Default bar color */
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            transition: height 0.5s ease-in-out, background-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            position: relative;
+        }
+        .bar-chart-bar .percentage {
+            position: absolute;
+            top: -24px; /* Adjust as needed */
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #374151; /* gray-700 */
+        }
+        body.dark .bar-chart-bar .percentage {
+            color: #d1d5db; /* gray-300 */
+        }
+        .bar-chart-bar .label {
+            position: absolute;
+            bottom: -24px; /* Adjust as needed */
+            font-size: 0.75rem;
+            color: #4b5563; /* gray-600 */
+            text-transform: capitalize;
+            text-align: center;
+            width: 100%;
+        }
+        body.dark .bar-chart-bar .label {
+            color: #9ca3af; /* gray-400 */
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header" class="header-container" style="display: none;">
+        <nav class="navbar">
+            <div class="navbar-brand">Zvidambano Trading</div>
+            <ul class="nav-links">
+                <li><button id="navHomeBtn" class="nav-btn">Home</button></li>
+                <li><button id="navLogoutBtn" class="nav-btn">Logout</button></li>
+                <li><button id="navDarkModeToggleBtn" class="nav-btn dark-mode-toggle-btn">
+                    <!-- SVG icon updated by JS -->
+                </button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="app-root" class="container">
+        <!-- Content will be rendered here by JavaScript -->
+    </div>
+
+    <div id="notification-container"></div>
+
+    <script>
+        // --- Global State and Data Management ---
+        const AppState = {
+            userRole: localStorage.getItem('grainPlatformRole') || null,
+            userId: localStorage.getItem('grainPlatformUserId') || null,
+            isAuthenticated: !!(localStorage.getItem('grainPlatformRole')),
+            isDarkMode: localStorage.getItem('grainPlatformDarkMode') === 'true',
+            adminSelectedTab: 'products', // Default admin tab
+            clientProductFilter: { searchTerm: '' }, // New filter state for client products
+            clientProductSort: { by: 'name', order: 'asc' }, // New sort state for client products
+            adminProductFilter: { searchTerm: '' }, // New filter state for admin products
+            adminProductSort: { by: 'name', order: 'asc' }, // New sort state for admin products
+            currentPage: 'login', // Initial page is login
+
+
+            // Dummy Data Setup (will be loaded if localStorage is empty)
+            initialUsers: [
+                { id: 'user-client-001', role: 'client', username: 'agribuyer', email: 'agribuyer@example.com', isActive: true },
+                { id: 'user-client-002', role: 'client', username: 'grainharvester', email: 'grainharvester@example.com', isActive: true },
+                { id: 'user-supplier-001', role: 'supplier', username: 'farmlink', email: 'farmlink@example.com', isActive: true },
+                { id: 'user-supplier-002', role: 'supplier', username: 'harvestcorp', email: 'harvestcorp@example.com', isActive: true },
+                { id: 'user-admin-001', role: 'admin', username: 'admin', email: 'admin@example.com', isActive: true },
+            ],
+            initialProducts: [
+                { id: 'prod-corn-001', name: 'Yellow Maize', quantity: 500, unit: 'ton', price: 200, adminPrice: 210, location: 'Harare, Zimbabwe', supplierId: 'user-supplier-001', status: 'approved', specs: { moisture: 14, protein: 8, purity: 98 } },
+                { id: 'prod-wheat-001', name: 'Hard Red Wheat', quantity: 300, unit: 'ton', price: 250, adminPrice: 262.5, location: 'Bulawayo, Zimbabwe', supplierId: 'user-supplier-001', status: 'approved', specs: { moisture: 13, protein: 12, purity: 99 } },
+                { id: 'prod-soy-001', name: 'Soybean', quantity: 700, unit: 'ton', price: 350, adminPrice: 367.5, location: 'Mutare, Zimbabwe', supplierId: 'user-supplier-002', status: 'approved', specs: { moisture: 12, protein: 38, purity: 97 } },
+                { id: 'prod-millet-001', name: 'Pearl Millet', quantity: 150, unit: 'ton', price: 180, adminPrice: null, location: 'Rusape, Zimbabwe', supplierId: 'user-supplier-002', status: 'pending_approval', specs: { moisture: 10, protein: 11, purity: 96 } },
+                { id: 'prod-barley-001', name: 'Barley', quantity: 200, unit: 'ton', price: 220, adminPrice: null, location: 'Gweru, Zimbabwe', supplierId: 'user-supplier-001', status: 'pending_approval', specs: { moisture: 13.5, protein: 10, purity: 97 } },
+                { id: 'prod-sorghum-001', name: 'Sorghum', quantity: 400, unit: 'ton', price: 190, adminPrice: 199.5, location: 'Kwekwe, Zimbabwe', supplierId: 'user-supplier-002', status: 'approved', specs: { moisture: 15, protein: 9, purity: 95 } },
+            ],
+            initialRfqs: [
+                { id: 'rfq-001', productId: 'prod-corn-001', productName: 'Yellow Maize', quantity: 100, unit: 'ton', message: 'Urgent requirement for feed.', date: '2025-06-15T10:00:00Z', clientId: 'user-client-001', status: 'quoted' },
+                { id: 'rfq-002', productId: 'prod-soy-001', productName: 'Soybean', quantity: 200, unit: 'ton', message: 'Looking for best price for oil production.', date: '2025-06-16T11:30:00Z', clientId: 'user-client-002', status: 'completed' },
+                { id: 'rfq-003', productId: 'prod-wheat-001', productName: 'Hard Red Wheat', quantity: 50, unit: 'ton', message: 'Need high protein wheat for baking.', date: '2025-06-17T14:00:00Z', clientId: 'user-client-001', status: 'pending' },
+            ],
+            initialQuotes: [
+                { id: 'quote-001', rfqId: 'rfq-001', productId: 'prod-corn-001', clientId: 'user-client-001', supplierId: 'user-supplier-001', pricePerUnit: 205, quantity: 100, date: '2025-06-15T10:30:00Z', status: 'accepted' },
+                { id: 'quote-002', rfqId: 'rfq-002', productId: 'prod-soy-001', clientId: 'user-client-002', supplierId: 'user-supplier-002', pricePerUnit: 355, quantity: 200, date: '2025-06-16T12:00:00Z', status: 'accepted' },
+                { id: 'quote-003', rfqId: 'rfq-001', productId: 'prod-corn-001', clientId: 'user-client-001', supplierId: 'user-supplier-002', pricePerUnit: 208, quantity: 100, date: '2025-06-15T10:45:00Z', status: 'pending' },
+            ],
+            initialShipments: [
+                { id: 'ship-001', quoteId: 'quote-001', productId: 'prod-corn-001', clientId: 'user-client-001', supplierId: 'user-supplier-001', status: 'in-transit', eta: '2025-06-22', tracking: 'TRK-ABC-123', lastUpdate: '2025-06-20T08:00:00Z' },
+                { id: 'ship-002', quoteId: 'quote-002', productId: 'prod-soy-001', clientId: 'user-client-002', supplierId: 'user-supplier-002', status: 'delivered', eta: '2025-06-18', tracking: 'TRK-DEF-456', lastUpdate: '2025-06-18T16:00:00Z' },
+            ],
+
+            // Current application data
+            products: [],
+            rfqs: [],
+            quotes: [],
+            shipments: [],
+            users: [],
+            watchlist: [], // Specific to client user
+
+            // Internal flag for rendering
+            renderScheduled: false,
+        };
+
+        // --- Pub/Sub-like system for state updates and UI re-rendering ---
+        const subscribers = {};
+
+        function subscribe(event, callback) {
+            if (!subscribers[event]) {
+                subscribers[event] = [];
+            }
+            subscribers[event].push(callback);
+        }
+
+        function publish(event, data) {
+            if (subscribers[event]) {
+                subscribers[event].forEach(callback => callback(data));
+            }
+            // Trigger a re-render after any state change if not already scheduled
+            scheduleRender();
+        }
+
+        // Debounce rendering to avoid multiple immediate re-renders
+        function scheduleRender() {
+            if (!AppState.renderScheduled) {
+                AppState.renderScheduled = true;
+                requestAnimationFrame(() => {
+                    renderApp();
+                    AppState.renderScheduled = false;
+                });
+            }
+        }
+
+        // --- Persistence Layer ---
+        function loadState() {
+            AppState.products = JSON.parse(localStorage.getItem('products')) || AppState.initialProducts;
+            AppState.rfqs = JSON.parse(localStorage.getItem('rfqs')) || AppState.initialRfqs;
+            AppState.quotes = JSON.parse(localStorage.getItem('quotes')) || AppState.initialQuotes;
+            AppState.shipments = JSON.parse(localStorage.getItem('shipments')) || AppState.initialShipments;
+            AppState.users = JSON.parse(localStorage.getItem('users')) || AppState.initialUsers;
+            // Load watchlist specific to the logged-in client
+            if (AppState.userRole === 'client' && AppState.userId) {
+                AppState.watchlist = JSON.parse(localStorage.getItem(`watchlist-${AppState.userId}`)) || [];
+            } else {
+                AppState.watchlist = [];
+            }
+            AppState.isDarkMode = localStorage.getItem('grainPlatformDarkMode') === 'true';
+            document.body.classList.toggle('dark', AppState.isDarkMode);
+        }
+
+        function saveState() {
+            localStorage.setItem('products', JSON.stringify(AppState.products));
+            localStorage.setItem('rfqs', JSON.stringify(AppState.rfqs));
+            localStorage.setItem('quotes', JSON.stringify(AppState.quotes));
+            localStorage.setItem('shipments', JSON.stringify(AppState.shipments));
+            localStorage.setItem('users', JSON.stringify(AppState.users));
+            if (AppState.userRole === 'client' && AppState.userId) {
+                localStorage.setItem(`watchlist-${AppState.userId}`, JSON.stringify(AppState.watchlist));
+            }
+            localStorage.setItem('grainPlatformDarkMode', AppState.isDarkMode);
+        }
+
+        // --- Core Application Logic ---
+
+        function generateUniqueId(prefix) {
+            return `${prefix}-${Math.random().toString(36).substring(2, 10)}`;
+        }
+
+        function login(role, username) { // Modified login function to directly use role and username
+            const user = AppState.initialUsers.find(u => u.username === username && u.role === role);
+            if (user) {
+                AppState.userRole = user.role;
+                AppState.userId = user.id;
+                AppState.isAuthenticated = true;
+                localStorage.setItem('grainPlatformRole', user.role);
+                localStorage.setItem('grainPlatformUserId', user.id);
+                // Ensure the user exists in the `users` state for display purposes
+                if (!AppState.users.some(u => u.id === user.id)) {
+                    AppState.users.push(user);
+                }
+                // Reload watchlist for the newly logged-in client if applicable
+                if (user.role === 'client') {
+                    AppState.watchlist = JSON.parse(localStorage.getItem(`watchlist-${user.id}`)) || [];
+                } else {
+                    AppState.watchlist = [];
+                }
+                saveState();
+                showNotification(`Logged in as ${user.role} (${user.username})`, 'success');
+                navigateToDashboard(); // Navigate to user's dashboard after successful login
+            } else {
+                // This case should ideally not happen with direct role buttons, but good for debugging.
+                showNotification('Could not find user for selected role.', 'error');
+            }
+            publish('authChange'); // Trigger re-render for UI updates (e.g., header visibility)
+        }
+
+        function logout() {
+            AppState.userRole = null;
+            AppState.userId = null;
+            AppState.isAuthenticated = false;
+            AppState.watchlist = []; // Clear watchlist on logout
+            localStorage.removeItem('grainPlatformRole');
+            localStorage.removeItem('grainPlatformUserId');
+            localStorage.removeItem(`watchlist-${AppState.userId}`); // Clear old watchlist
+            saveState(); // Persist changes
+            navigateTo('login'); // Redirect to login page
+            showNotification('Logged out successfully.', 'info');
+        }
+
+        function addProduct(product) {
+            AppState.products.push({ ...product, id: generateUniqueId('prod'), status: 'pending_approval' });
+            saveState();
+            publish('productsUpdated');
+        }
+
+        function approveProduct(productId) {
+            AppState.products = AppState.products.map(p => {
+                if (p.id === productId) {
+                    const adminPrice = p.price * 1.05;
+                    return { ...p, status: 'approved', adminPrice: parseFloat(adminPrice.toFixed(2)) };
+                }
+                return p;
+            });
+            saveState();
+            publish('productsUpdated');
+        }
+
+        function requestQuote(rfqDetails) {
+            AppState.rfqs.push({ ...rfqDetails, id: generateUniqueId('rfq'), status: 'pending', clientId: AppState.userId });
+            saveState();
+            publish('rfqsUpdated');
+        }
+
+        function submitQuote(quoteDetails) {
+            AppState.quotes.push({ ...quoteDetails, id: generateUniqueId('quote'), status: 'pending', supplierId: AppState.userId });
+            AppState.rfqs = AppState.rfqs.map(rfq => rfq.id === quoteDetails.rfqId ? { ...rfq, status: 'quoted' } : rfq);
+            saveState();
+            publish('quotesUpdated');
+            publish('rfqsUpdated');
+        }
+
+        function acceptQuote(quoteId) {
+            AppState.quotes = AppState.quotes.map(q => q.id === quoteId ? { ...q, status: 'accepted' } : q);
+            const acceptedQuote = AppState.quotes.find(q => q.id === quoteId);
+            if (acceptedQuote) {
+                AppState.shipments.push({
+                    id: generateUniqueId('ship'),
+                    quoteId: acceptedQuote.id,
+                    productId: acceptedQuote.productId,
+                    clientId: acceptedQuote.clientId,
+                    supplierId: acceptedQuote.supplierId,
+                    status: 'pending',
+                    eta: 'TBD',
+                    tracking: generateUniqueId('track'),
+                    lastUpdate: new Date().toISOString(),
+                });
+                AppState.rfqs = AppState.rfqs.map(rfq => rfq.id === acceptedQuote.rfqId ? { ...rfq, status: 'completed' } : rfq);
+            }
+            saveState();
+            publish('quotesUpdated');
+            publish('shipmentsUpdated');
+            publish('rfqsUpdated');
+        }
+
+        function addToWatchlist(product) {
+            if (!AppState.watchlist.some(item => item.id === product.id)) {
+                AppState.watchlist.push(product);
+                saveState();
+                publish('watchlistUpdated');
+                showNotification(`${product.name} added to your watchlist!`, 'info');
+            } else {
+                showNotification(`${product.name} is already in your watchlist.`, 'warning');
+            }
+        }
+
+        function removeFromWatchlist(productId) {
+            AppState.watchlist = AppState.watchlist.filter(item => item.id !== productId);
+            saveState();
+            publish('watchlistUpdated');
+            showNotification('Product removed from watchlist.', 'info');
+        }
+
+        function updateShipmentStatus(shipmentId, newStatus) {
+            AppState.shipments = AppState.shipments.map(s => s.id === shipmentId ? { ...s, status: newStatus, lastUpdate: new Date().toISOString() } : s);
+            saveState();
+            publish('shipmentsUpdated');
+        }
+
+        function toggleUserStatus(targetUserId) {
+            AppState.users = AppState.users.map(user =>
+                user.id === targetUserId ? { ...user, isActive: !user.isActive } : user
+            );
+            saveState();
+            publish('usersUpdated');
+        }
+
+        function toggleDarkMode() {
+            AppState.isDarkMode = !AppState.isDarkMode;
+            document.body.classList.toggle('dark', AppState.isDarkMode);
+            saveState();
+            updateHeaderNavLinks(); // Update the dark mode icon in the header
+        }
+
+        // --- Notification System ---
+        function showNotification(message, type = 'info', duration = 3000) {
+            const container = document.getElementById('notification-container');
+            if (!container) return;
+
+            const notificationDiv = document.createElement('div');
+            const id = Date.now();
+            notificationDiv.classList.add('notification', type);
+            notificationDiv.style.setProperty('--duration', `${duration / 1000}s`);
+
+            let iconSvg = '';
+            switch (type) {
+                case 'success':
+                    iconSvg = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>';
+                    break;
+                case 'error':
+                    iconSvg = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>';
+                    break;
+                case 'warning':
+                    iconSvg = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.513a1 1 0 011.486 0l5.753 9.588A1 1 0 0115 14H5a1 1 0 01-.743-1.639l5.753-9.588zM10 16a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>';
+                    break;
+                case 'info':
+                default:
+                    iconSvg = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zm-1 2a1 1 0 100 2h.01a1 1 0 000-2H10z" clip-rule="evenodd"></path></svg>';
+                    break;
+            }
+            notificationDiv.innerHTML = `${iconSvg}<span>${message}</span>`;
+            container.appendChild(notificationDiv);
+
+            // Remove after duration
+            setTimeout(() => {
+                notificationDiv.style.opacity = '0';
+                notificationDiv.style.transform = 'translateX(100%)';
+                notificationDiv.addEventListener('transitionend', () => notificationDiv.remove());
+            }, duration);
+        }
+
+        // --- Form Validation Helper ---
+        function validateInput(inputElement, errorMessageElement, validationFn, errorMessage) {
+            const isValid = validationFn(inputElement.value);
+            if (!isValid) {
+                inputElement.classList.add('is-invalid');
+                errorMessageElement.textContent = errorMessage;
+            } else {
+                inputElement.classList.remove('is-invalid');
+                errorMessageElement.textContent = '';
+            }
+            return isValid;
+        }
+
+        function clearFormValidation(formId) {
+            const form = document.getElementById(formId);
+            if (form) {
+                form.querySelectorAll('input.is-invalid, textarea.is-invalid, select.is-invalid').forEach(el => {
+                    el.classList.remove('is-invalid');
+                });
+                form.querySelectorAll('.error-message').forEach(el => {
+                    el.textContent = '';
+                });
+            }
+        }
+
+
+        // --- UI Rendering Functions ---
+
+        function renderLoginPage() {
+            const appRoot = document.getElementById('app-root');
+            appRoot.innerHTML = `
+                <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4">
+                    <div class="card text-center" style="max-width: 600px; padding: 32px;">
+                        <h1 class="text-4xl font-extrabold mb-8 text-indigo-700 dark:text-indigo-400">
+                            Zvidambano Trading
+                        </h1>
+                        <p class="text-xl mb-8 text-gray-700 dark:text-gray-300">
+                            Select your role to get started:
+                        </p>
+                        <div class="flex flex-col md:flex-row gap-6">
+                            <button id="loginClientBtn" class="btn btn-primary flex-1">
+                                <span class="text-xl block mb-2">🧑‍💻</span> Client (AgriBuyer)
+                            </button>
+                            <button id="loginSupplierBtn" class="btn btn-success flex-1">
+                                <span class="text-xl block mb-2">🚜</span> Supplier (FarmLink Grain)
+                            </button>
+                            <button id="loginAdminBtn" class="btn btn-info flex-1">
+                                <span class="text-xl block mb-2">👑</span> Zvidambano Trading (PlatformAdmin)
+                            </button>
+                        </div>
+                        <p class="mt-6 text-sm text-gray-500 dark:text-gray-400">
+                            Also available: Client (GrainHarvester), Supplier (HarvestCorp).
+                        </p>
+                    </div>
+                </div>
+            `;
+            // Attach event listeners for role selection buttons
+            document.getElementById('loginClientBtn').addEventListener('click', () => login('client', 'agribuyer'));
+            document.getElementById('loginSupplierBtn').addEventListener('click', () => login('supplier', 'farmlink'));
+            document.getElementById('loginAdminBtn').addEventListener('click', () => login('admin', 'admin'));
+        }
+
+
+        function renderClientDashboard() {
+            const appRoot = document.getElementById('app-root');
+            const currentUser = AppState.users.find(u => u.id === AppState.userId);
+            const username = currentUser ? currentUser.username : AppState.userId.slice(-4);
+
+            // Filter and sort products for display
+            let filteredProducts = AppState.products.filter(p => p.status === 'approved');
+
+            // Apply search term filter
+            if (AppState.clientProductFilter.searchTerm) {
+                const searchTermLower = AppState.clientProductFilter.searchTerm.toLowerCase();
+                filteredProducts = filteredProducts.filter(p =>
+                    p.name.toLowerCase().includes(searchTermLower) ||
+                    p.location.toLowerCase().includes(searchTermLower)
+                );
+            }
+
+            // Apply sorting
+            filteredProducts.sort((a, b) => {
+                let valA, valB;
+                switch (AppState.clientProductSort.by) {
+                    case 'name':
+                        valA = a.name.toLowerCase();
+                        valB = b.name.toLowerCase();
+                        break;
+                    case 'quantity':
+                        valA = a.quantity;
+                        valB = b.quantity;
+                        break;
+                    case 'price':
+                        valA = a.adminPrice || a.price; // Use adminPrice if available
+                        valB = b.adminPrice || b.price;
+                        break;
+                    default:
+                        valA = a.name.toLowerCase();
+                        valB = b.name.toLowerCase();
+                }
+
+                if (valA < valB) return AppState.clientProductSort.order === 'asc' ? -1 : 1;
+                if (valA > valB) return AppState.clientProductSort.order === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+
+            let selectedProductModal = '';
+            if (AppState.selectedProductForQuote) {
+                selectedProductModal = `
+                    <div id="quoteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                        <div class="card w-full max-w-md">
+                            <h3 class="text-2xl font-bold mb-4 text-indigo-700 dark:text-indigo-400">Request Quote for ${AppState.selectedProductForQuote.name}</h3>
+                            <div class="mb-4">
+                                <label for="quoteQuantityInput" class="block text-sm font-bold mb-2 text-gray-700 dark:text-gray-300">Desired Quantity (${AppState.selectedProductForQuote.unit}):</label>
+                                <input type="number" id="quoteQuantityInput" value="" placeholder="e.g., 100" min="1" required>
+                                <span id="quoteQuantityError" class="error-message"></span>
+                            </div>
+                            <div class="mb-6">
+                                <label for="clientMessageInput" class="block text-sm font-bold mb-2 text-gray-700 dark:text-gray-300">Your Message (Optional):</label>
+                                <textarea id="clientMessageInput" rows="3" placeholder="Any specific requirements or questions..."></textarea>
+                            </div>
+                            <div class="flex justify-end gap-4">
+                                <button id="closeQuoteModalBtn" class="btn btn-light">Cancel</button>
+                                <button id="submitClientQuoteBtn" class="btn btn-primary">Submit RFQ</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            appRoot.innerHTML = `
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-xl text-gray-900 dark:text-gray-100 min-h-screen">
+                    <h2 class="text-3xl font-bold mb-6 text-indigo-700 dark:text-indigo-400">Client Dashboard</h2>
+                    <p class="text-lg mb-4">Welcome, Client ${username}!</p>
+
+                    <div class="mb-10 card-inner">
+                        <h3 class="text-2xl font-semibold mb-4 text-indigo-600 dark:text-indigo-300">Available Products</h3>
+                        <div class="flex flex-col md:flex-row gap-4 mb-6">
+                            <input type="text" id="clientProductSearch" placeholder="Search by name or location..." value="${AppState.clientProductFilter.searchTerm}">
+                            <select id="clientProductSort" class="flex-1">
+                                <option value="name_asc" ${AppState.clientProductSort.by === 'name' && AppState.clientProductSort.order === 'asc' ? 'selected' : ''}>Name (A-Z)</option>
+                                <option value="name_desc" ${AppState.clientProductSort.by === 'name' && AppState.clientProductSort.order === 'desc' ? 'selected' : ''}>Name (Z-A)</option>
+                                <option value="quantity_asc" ${AppState.clientProductSort.by === 'quantity' && AppState.clientProductSort.order === 'asc' ? 'selected' : ''}>Quantity (Low to High)</option>
+                                <option value="quantity_desc" ${AppState.clientProductSort.by === 'quantity' && AppState.clientProductSort.order === 'desc' ? 'selected' : ''}>Quantity (High to Low)</option>
+                                <option value="price_asc" ${AppState.clientProductSort.by === 'price' && AppState.clientProductSort.order === 'asc' ? 'selected' : ''}>Price (Low to High)</option>
+                                <option value="price_desc" ${AppState.clientProductSort.by === 'price' && AppState.clientProductSort.order === 'desc' ? 'selected' : ''}>Price (High to Low)</option>
+                            </select>
+                        </div>
+                        ${filteredProducts.length === 0 ? `
+                            <p class="text-gray-600 dark:text-gray-400">No approved products available matching your criteria.</p>
+                        ` : `
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                ${filteredProducts.map(product => `
+                                    <div class="card p-4 flex flex-col justify-between">
+                                        <div>
+                                            <h4 class="text-xl font-bold text-gray-800 dark:text-gray-200">${product.name}</h4>
+                                            <p class="text-gray-700 dark:text-gray-300">Available: ${product.quantity} ${product.unit}</p>
+                                            <p class="text-gray-700 dark:text-gray-300">Price (Admin): $${product.adminPrice ? product.adminPrice.toFixed(2) : 'N/A'}/${product.unit}</p>
+                                            <p class="text-gray-700 dark:text-gray-300">Location: ${product.location}</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Moisture: ${product.specs?.moisture}% | Protein: ${product.specs?.protein}%</p>
+                                        </div>
+                                        <div class="mt-4 flex flex-wrap gap-2">
+                                            <button data-product-id="${product.id}" class="btn btn-success text-sm request-quote-btn">
+                                                Request Quote
+                                            </button>
+                                            <button data-product-id="${product.id}" class="btn btn-primary text-sm add-to-watchlist-btn">
+                                                Add to Watchlist
+                                            </button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `}
+                    </div>
+
+                    <div class="mb-10 card-inner">
+                        <h3 class="text-2xl font-semibold mb-4 text-indigo-600 dark:text-indigo-300">My Watchlist</h3>
+                        ${AppState.watchlist.length === 0 ? `
+                            <p class="text-gray-600 dark:text-gray-400">Your watchlist is empty.</p>
+                        ` : `
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                ${AppState.watchlist.map(product => `
+                                    <div class="card p-4 flex flex-col justify-between">
+                                        <div>
+                                            <h4 class="text-lg font-bold text-gray-800 dark:text-gray-200">${product.name}</h4>
+                                            <p class="text-gray-700 dark:text-gray-300">Available: ${product.quantity} ${product.unit}</p>
+                                            <p class="text-gray-700 dark:text-gray-300">Price (Admin): $${product.adminPrice ? product.adminPrice.toFixed(2) : 'N/A'}/${product.unit}</p>
+                                        </div>
+                                        <button data-product-id="${product.id}" class="mt-4 btn btn-danger text-sm remove-from-watchlist-btn">
+                                            Remove
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `}
+                    </div>
+
+                    <div class="mb-10 card-inner">
+                        <h3 class="text-2xl font-semibold mb-4 text-indigo-600 dark:text-indigo-300">My RFQs & Quotes</h3>
+                        ${AppState.rfqs.filter(r => r.clientId === AppState.userId).length === 0 ? `
+                            <p class="text-gray-600 dark:text-gray-400">You have not requested any quotes yet.</p>
+                        ` : `
+                            <div class="space-y-4">
+                                ${AppState.rfqs.filter(r => r.clientId === AppState.userId).map(rfq => `
+                                    <div class="card p-4">
+                                        <h4 class="text-xl font-bold text-gray-800 dark:text-gray-200">RFQ for ${rfq.productName} (${rfq.quantity} ${rfq.unit || 'units'})</h4>
+                                        <p class="text-gray-700 dark:text-gray-300">Status: <span class="${
+                                            rfq.status === 'pending' ? 'text-yellow-600' :
+                                            rfq.status === 'quoted' ? 'text-blue-600' :
+                                            'text-green-600'
+                                        } font-semibold">${rfq.status.replace(/_/g, ' ')}</span></p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Requested on: ${new Date(rfq.date).toLocaleDateString()}</p>
+
+                                        <div class="mt-4 border-t pt-4 border-gray-200 dark:border-gray-600">
+                                            <h5 class="text-lg font-semibold mb-2 text-indigo-500 dark:text-indigo-300">Received Quotes:</h5>
+                                            ${AppState.quotes.filter(q => q.rfqId === rfq.id).length === 0 ? `
+                                                <p class="text-gray-600 dark:text-gray-400">No quotes received yet for this RFQ.</p>
+                                            ` : `
+                                                <div class="space-y-3">
+                                                    ${AppState.quotes.filter(q => q.rfqId === rfq.id).map(quote => `
+                                                        <div class="card-inner p-3 flex justify-between items-center">
+                                                            <div>
+                                                                <p class="font-semibold text-gray-800 dark:text-gray-200">Price: $${quote.pricePerUnit}/${rfq.unit || 'unit'} for ${quote.quantity} ${rfq.unit || 'units'}</p>
+                                                                <p class="text-sm text-gray-700 dark:text-gray-300">Supplier: ${AppState.users.find(u => u.id === quote.supplierId)?.username || 'Unknown'}</p>
+                                                                <p class="text-sm text-gray-600 dark:text-gray-400">Quote Status: <span class="${
+                                                                    quote.status === 'pending' ? 'text-yellow-600' :
+                                                                    quote.status === 'accepted' ? 'text-green-600' :
+                                                                    'text-red-600'
+                                                                } font-semibold">${quote.status}</span></p>
+                                                            </div>
+                                                            ${quote.status === 'pending' ? `
+                                                                <button data-quote-id="${quote.id}" class="btn btn-primary text-sm accept-quote-btn">
+                                                                    Accept Quote
+                                                                </button>
+                                                            ` : ''}
+                                                        </div>
+                                                    `).join('')}
+                                                </div>
+                                            `}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `}
+                    </div>
+
+                    <div class="mb-10 card-inner">
+                        <h3 class="text-2xl font-semibold mb-4 text-indigo-600 dark:text-indigo-300">My Shipments</h3>
+                        ${AppState.shipments.filter(s => s.clientId === AppState.userId).length === 0 ? `
+                            <p class="text-gray-600 dark:text-gray-400">You have no active or historical shipments.</p>
+                        ` : `
+                            <div class="space-y-4">
+                                ${AppState.shipments.filter(s => s.clientId === AppState.userId).map(shipment => `
+                                    <div class="card p-4">
+                                        <h4 class="text-xl font-bold text-gray-800 dark:text-gray-200">Shipment ID: ${shipment.id}</h4>
+                                        <p class="text-gray-700 dark:text-gray-300">Product: ${AppState.products.find(p => p.id === shipment.productId)?.name || 'N/A'}</p>
+                                        <p class="text-gray-700 dark:text-gray-300">Status: <span class="${
+                                            shipment.status === 'pending' ? 'text-yellow-600' :
+                                            shipment.status === 'in-transit' ? 'text-blue-600' :
+                                            'text-green-600'
+                                        } font-semibold">${shipment.status.replace(/-/g, ' ')}</span></p>
+                                        <p class="text-gray-700 dark:text-gray-300">ETA: ${shipment.eta}</p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Tracking: ${shipment.tracking}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `}
+                    </div>
+                </div>
+                ${selectedProductModal}
+            `;
+            // Attach event listeners after rendering
+            document.querySelectorAll('.request-quote-btn').forEach(button => {
+                button.addEventListener('click', (e) => openQuoteModal(e.target.dataset.productId));
+            });
+            document.querySelectorAll('.add-to-watchlist-btn').forEach(button => {
+                button.addEventListener('click', (e) => addToWatchlistById(e.target.dataset.productId));
+            });
+            document.querySelectorAll('.remove-from-watchlist-btn').forEach(button => {
+                button.addEventListener('click', (e) => removeFromWatchlistById(e.target.dataset.productId));
+            });
+            document.querySelectorAll('.accept-quote-btn').forEach(button => {
+                button.addEventListener('click', (e) => acceptClientQuote(e.target.dataset.quoteId));
+            });
+
+            if (AppState.selectedProductForQuote) {
+                document.getElementById('closeQuoteModalBtn').addEventListener('click', closeQuoteModal);
+                document.getElementById('submitClientQuoteBtn').addEventListener('click', submitClientQuoteHandler);
+            }
+
+            document.getElementById('clientProductSearch').addEventListener('input', (e) => {
+                AppState.clientProductFilter.searchTerm = e.target.value;
+                publish('clientProductFilterChanged');
+            });
+            document.getElementById('clientProductSort').addEventListener('change', (e) => {
+                const [by, order] = e.target.value.split('_');
+                AppState.clientProductSort.by = by;
+                AppState.clientProductSort.order = order;
+                publish('clientProductSortChanged');
+            });
+        }
+
+        // Functions for client dashboard interactions
+        function openQuoteModal(productId) {
+            AppState.selectedProductForQuote = AppState.products.find(p => p.id === productId);
+            renderApp(); // Re-render to show the modal
+            // Clear validation messages and classes when modal opens
+            const quantityInput = document.getElementById('quoteQuantityInput');
+            if (quantityInput) {
+                quantityInput.classList.remove('is-invalid');
+                document.getElementById('quoteQuantityError').textContent = '';
+            }
+        }
+
+        function closeQuoteModal() {
+            AppState.selectedProductForQuote = null;
+            renderApp(); // Re-render to hide the modal
+        }
+
+        function submitClientQuoteHandler() {
+            const quantityInput = document.getElementById('quoteQuantityInput');
+            const messageInput = document.getElementById('clientMessageInput');
+
+            let isValid = true;
+
+            // Validate quantity
+            isValid = validateInput(
+                quantityInput,
+                document.getElementById('quoteQuantityError'),
+                (value) => !isNaN(parseFloat(value)) && parseFloat(value) > 0,
+                'Quantity must be a positive number.'
+            ) && isValid; // Ensure previous validation status is preserved
+
+            if (!isValid) {
+                showNotification('Please correct the errors in the form.', 'error');
+                return;
+            }
+
+            const quantity = parseFloat(quantityInput.value);
+            const message = messageInput.value;
+
+            requestQuote({
+                productId: AppState.selectedProductForQuote.id,
+                productName: AppState.selectedProductForQuote.name,
+                quantity: quantity,
+                unit: AppState.selectedProductForQuote.unit,
+                message: message,
+                date: new Date().toISOString()
+            });
+            closeQuoteModal();
+            showNotification('Quote requested successfully!', 'success');
+        }
+
+
+        function renderSupplierDashboard() {
+            const appRoot = document.getElementById('app-root');
+            const currentUser = AppState.users.find(u => u.id === AppState.userId);
+            const username = currentUser ? currentUser.username : AppState.userId.slice(-4);
+
+            let submitQuoteModal = '';
+            if (AppState.selectedRfqForQuote) {
+                submitQuoteModal = `
+                    <div id="submitQuoteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                        <div class="card w-full max-w-md">
+                            <h3 class="text-2xl font-bold mb-4 text-indigo-700 dark:text-indigo-400">Submit Quote for ${AppState.selectedRfqForQuote.productName}</h3>
+                            <p class="mb-4 text-gray-700 dark:text-gray-300">Requested Quantity: ${AppState.selectedRfqForQuote.quantity} ${AppState.selectedRfqForQuote.unit || 'units'}</p>
+                            <div class="mb-4">
+                                <label for="quotePriceInput" class="block text-sm font-bold mb-2 text-gray-700 dark:text-gray-300">Your Price per Unit:</label>
+                                <input type="number" id="quotePriceInput" value="" placeholder="e.g., 150" min="0" required>
+                                <span id="quotePriceError" class="error-message"></span>
+                            </div>
+                            <div class="mb-6">
+                                <label for="quoteSupplyQuantityInput" class="block text-sm font-bold mb-2 text-gray-700 dark:text-gray-300">Quantity you can supply:</label>
+                                <input type="number" id="quoteSupplyQuantityInput" value="${AppState.selectedRfqForQuote.quantity}" placeholder="e.g., ${AppState.selectedRfqForQuote.quantity}" min="1" required>
+                                <span id="quoteSupplyQuantityError" class="error-message"></span>
+                            </div>
+                            <div class="flex justify-end gap-4">
+                                <button id="closeSubmitQuoteModalBtn" class="btn btn-light">Cancel</button>
+                                <button id="submitSupplierQuoteBtn" class="btn btn-primary">Submit Quote</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            appRoot.innerHTML = `
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-xl text-gray-900 dark:text-gray-100 min-h-screen">
+                    <h2 class="text-3xl font-bold mb-6 text-indigo-700 dark:text-indigo-400">Supplier Dashboard</h2>
+                    <p class="text-lg mb-4">Welcome, Supplier ${username}!</p>
+
+                    <div class="mb-10 card-inner">
+                        <h3 class="text-2xl font-semibold mb-4 text-indigo-600 dark:text-indigo-300">Manage Listings</h3>
+                        <form id="addProductForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <input type="text" name="name" placeholder="Product Name (e.g., Yellow Maize)" required>
+                                <span id="productNameError" class="error-message"></span>
+                            </div>
+                            <div>
+                                <input type="number" name="quantity" placeholder="Quantity" min="1" required>
+                                <span id="productQuantityError" class="error-message"></span>
+                            </div>
+                            <select name="unit">
+                                <option value="ton">Ton</option>
+                                <option value="kg">KG</option>
+                                <option value="bushel">Bushel</option>
+                            </select>
+                            <div>
+                                <input type="number" name="price" placeholder="Price per unit" min="0" required>
+                                <span id="productPriceError" class="error-message"></span>
+                            </div>
+                            <div>
+                                <input type="text" name="location" placeholder="Location (e.g., Harare, Zimbabwe)" required>
+                                <span id="productLocationError" class="error-message"></span>
+                            </div>
+                            <div>
+                                <input type="number" name="specs.moisture" placeholder="Moisture (%)" min="0" max="100">
+                                <span id="productMoistureError" class="error-message"></span>
+                            </div>
+                            <div>
+                                <input type="number" name="specs.protein" placeholder="Protein (%)" min="0" max="100">
+                                <span id="productProteinError" class="error-message"></span>
+                            </div>
+                            <div>
+                                <input type="number" name="specs.purity" placeholder="Purity (%)" min="0" max="100">
+                                <span id="productPurityError" class="error-message"></span>
+                            </div>
+                            <button type="submit" class="btn btn-info col-span-full">
+                                Add New Product Listing
+                            </button>
+                        </form>
+
+                        <h4 class="text-xl font-semibold mt-8 mb-4 text-indigo-500 dark:text-indigo-300">My Current Listings</h4>
+                        ${AppState.products.filter(p => p.supplierId === AppState.userId).length === 0 ? `
+                            <p class="text-gray-600 dark:text-gray-400">You have no product listings yet.</p>
+                        ` : `
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                ${AppState.products.filter(p => p.supplierId === AppState.userId).map(product => `
+                                    <div class="card p-4">
+                                        <h5 class="text-lg font-bold text-gray-800 dark:text-gray-200">${product.name}</h5>
+                                        <p class="text-gray-700 dark:text-gray-300">Quantity: ${product.quantity} ${product.unit}</p>
+                                        <p class="text-gray-700 dark:text-gray-300">Price: $${product.price}/${product.unit}</p>
+                                        <p class="text-gray-700 dark:text-gray-300">Status: <span class="${
+                                            product.status === 'pending_approval' ? 'text-yellow-600' :
+                                            'text-green-600'
+                                        } font-semibold">${product.status.replace(/_/g, ' ')}</span></p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `}
+                    </div>
+
+                    <div class="mb-10 card-inner">
+                        <h3 class="text-2xl font-semibold mb-4 text-indigo-600 dark:text-indigo-300">Pending RFQs</h3>
+                        ${AppState.rfqs.filter(r =>
+                            AppState.products.some(p => p.id === r.productId && p.supplierId === AppState.userId && p.status === 'approved') &&
+                            !AppState.quotes.some(q => q.rfqId === r.id && q.supplierId === AppState.userId)
+                        ).length === 0 ? `
+                            <p class="text-gray-600 dark:text-gray-400">No new RFQs for your approved products.</p>
+                        ` : `
+                            <div class="space-y-4">
+                                ${AppState.rfqs.filter(r =>
+                                    AppState.products.some(p => p.id === r.productId && p.supplierId === AppState.userId && p.status === 'approved') &&
+                                    !AppState.quotes.some(q => q.rfqId === r.id && q.supplierId === AppState.userId)
+                                ).map(rfq => `
+                                    <div class="card p-4 flex flex-col justify-between">
+                                        <div>
+                                            <h4 class="text-xl font-bold text-gray-800 dark:text-gray-200">RFQ from ${AppState.users.find(u => u.id === rfq.clientId)?.username || 'Unknown'} for ${rfq.productName}</h4>
+                                            <p class="text-gray-700 dark:text-gray-300">Requested Quantity: ${rfq.quantity} ${rfq.unit || 'units'}</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Message: "${rfq.message || 'No message'}"</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Date: ${new Date(rfq.date).toLocaleDateString()}</p>
+                                        </div>
+                                        <button data-rfq-id="${rfq.id}" class="mt-4 btn btn-primary text-sm open-submit-quote-btn">
+                                            Submit Quote
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `}
+                    </div>
+
+                    <div class="mb-10 card-inner">
+                        <h3 class="text-2xl font-semibold mb-4 text-indigo-600 dark:text-indigo-300">My Accepted Orders (Shipments)</h3>
+                        ${AppState.shipments.filter(s => s.supplierId === AppState.userId).length === 0 ? `
+                            <p class="text-gray-600 dark:text-gray-400">No accepted orders yet.</p>
+                        ` : `
+                            <div class="space-y-4">
+                                ${AppState.shipments.filter(s => s.supplierId === AppState.userId).map(shipment => `
+                                    <div class="card p-4">
+                                        <h4 class="text-xl font-bold text-gray-800 dark:text-gray-200">Shipment ID: ${shipment.id}</h4>
+                                        <p class="text-gray-700 dark:text-gray-300">Product: ${AppState.products.find(p => p.id === shipment.productId)?.name || 'N/A'}</p>
+                                        <p class="text-gray-700 dark:text-gray-300">Client: ${AppState.users.find(u => u.id === shipment.clientId)?.username || 'Unknown'}</p>
+                                        <p class="text-gray-700 dark:text-gray-300">Current Status: <span class="${
+                                            shipment.status === 'pending' ? 'text-yellow-600' :
+                                            shipment.status === 'in-transit' ? 'text-blue-600' :
+                                            'text-green-600'
+                                        } font-semibold">${shipment.status.replace(/-/g, ' ')}</span></p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Tracking: ${shipment.tracking}</p>
+                                        <div class="mt-4 flex gap-2 flex-wrap">
+                                            <select data-shipment-id="${shipment.id}" class="p-2 border rounded-lg dark:bg-gray-700 dark:text-gray-200 update-shipment-status-select">
+                                                <option value="pending" ${shipment.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                                <option value="in-transit" ${shipment.status === 'in-transit' ? 'selected' : ''}>In Transit</option>
+                                                <option value="delivered" ${shipment.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+                                                <option value="cancelled" ${shipment.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `}
+                    </div>
+                </div>
+                
+            `;
+            // Attach event listeners
+            document.getElementById('addProductForm').addEventListener('submit', handleAddProductFormSubmit);
+
+            document.querySelectorAll('.open-submit-quote-btn').forEach(button => {
+                button.addEventListener('click', (e) => openSubmitQuoteModal(e.target.dataset.rfqId));
+            });
+
+            document.querySelectorAll('.update-shipment-status-select').forEach(select => {
+                select.addEventListener('change', (e) => updateSupplierShipmentStatus(e.target.dataset.shipmentId, e.target.value));
+            });
+
+            if (AppState.selectedRfqForQuote) {
+                document.getElementById('closeSubmitQuoteModalBtn').addEventListener('click', closeSubmitQuoteModal);
+                document.getElementById('submitSupplierQuoteBtn').addEventListener('click', submitSupplierQuoteHandler);
+            }
+        }
+
+        // Functions for supplier dashboard interactions
+        function handleAddProductFormSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            let isValid = true;
+
+            // Basic text and number validation
+            isValid = validateInput(
+                form.elements.name,
+                document.getElementById('productNameError'),
+                (value) => value.trim() !== '',
+                'Product name is required.'
+            ) && isValid;
+            isValid = validateInput(
+                form.elements.quantity,
+                document.getElementById('productQuantityError'),
+                (value) => !isNaN(parseFloat(value)) && parseFloat(value) > 0,
+                'Quantity must be a positive number.'
+            ) && isValid;
+            isValid = validateInput(
+                form.elements.price,
+                document.getElementById('productPriceError'),
+                (value) => !isNaN(parseFloat(value)) && parseFloat(value) >= 0,
+                'Price must be a non-negative number.'
+            ) && isValid;
+            isValid = validateInput(
+                form.elements.location,
+                document.getElementById('productLocationError'),
+                (value) => value.trim() !== '',
+                'Location is required.'
+            ) && isValid;
+
+            // Optional specs validation (only if value exists, ensure it's a number)
+            ['moisture', 'protein', 'purity'].forEach(spec => {
+                const input = form.elements[`specs.${spec}`];
+                const errorSpan = document.getElementById(`product${spec.charAt(0).toUpperCase() + spec.slice(1)}Error`);
+                if (input.value.trim() !== '') {
+                    isValid = validateInput(
+                        input,
+                        errorSpan,
+                        (value) => !isNaN(parseFloat(value)) && parseFloat(value) >= 0 && parseFloat(value) <= 100,
+                        `Must be a number between 0 and 100.`
+                    ) && isValid;
+                } else {
+                    input.classList.remove('is-invalid'); // Clear if empty
+                    errorSpan.textContent = '';
+                }
+            });
+
+            if (!isValid) {
+                showNotification('Please correct the errors in the form.', 'error');
+                return;
+            }
+
+            const newProductData = {
+                name: form.elements.name.value,
+                quantity: parseFloat(form.elements.quantity.value),
+                unit: form.elements.unit.value,
+                price: parseFloat(form.elements.price.value),
+                location: form.elements.location.value,
+                specs: {
+                    moisture: parseFloat(form.elements['specs.moisture'].value) || null,
+                    protein: parseFloat(form.elements['specs.protein'].value) || null,
+                    purity: parseFloat(form.elements['specs.purity'].value) || null,
+                }
+            };
+
+            addProduct(newProductData);
+            form.reset(); // Clear form
+            clearFormValidation('addProductForm'); // Clear validation messages
+            showNotification('Product listing submitted for approval!', 'success');
+        }
+
+        function openSubmitQuoteModal(rfqId) {
+            AppState.selectedRfqForQuote = AppState.rfqs.find(r => r.id === rfqId);
+            renderApp(); // Re-render to show the modal
+            // Clear validation messages and classes when modal opens
+            const priceInput = document.getElementById('quotePriceInput');
+            const quantityInput = document.getElementById('quoteSupplyQuantityInput');
+            if (priceInput) {
+                priceInput.classList.remove('is-invalid');
+                document.getElementById('quotePriceError').textContent = '';
+            }
+            if (quantityInput) {
+                quantityInput.classList.remove('is-invalid');
+                document.getElementById('quoteSupplyQuantityError').textContent = '';
+            }
+        }
+
+        function closeSubmitQuoteModal() {
+            AppState.selectedRfqForQuote = null;
+            renderApp(); // Re-render to hide the modal
+        }
+
+        function submitSupplierQuoteHandler() {
+            const priceInput = document.getElementById('quotePriceInput');
+            const quantityInput = document.getElementById('quoteSupplyQuantityInput');
+
+            let isValid = true;
+            isValid = validateInput(
+                priceInput,
+                document.getElementById('quotePriceError'),
+                (value) => !isNaN(parseFloat(value)) && parseFloat(value) > 0,
+                'Price must be a positive number.'
+            ) && isValid;
+            isValid = validateInput(
+                quantityInput,
+                document.getElementById('quoteSupplyQuantityError'),
+                (value) => !isNaN(parseFloat(value)) && parseFloat(value) > 0,
+                'Quantity must be a positive number.'
+            ) && isValid;
+
+            if (!isValid) {
+                showNotification('Please correct the errors in the form.', 'error');
+                return;
+            }
+
+            const price = parseFloat(priceInput.value);
+            const quantity = parseFloat(quantityInput.value);
+
+            submitQuote({
+                rfqId: AppState.selectedRfqForQuote.id,
+                productId: AppState.selectedRfqForQuote.productId,
+                clientId: AppState.selectedRfqForQuote.clientId,
+                pricePerUnit: price,
+                quantity: quantity,
+                date: new Date().toISOString()
+            });
+            closeSubmitQuoteModal();
+            showNotification('Quote submitted successfully!', 'success');
+        }
+
+
+        function renderAdminDashboard() {
+            const appRoot = document.getElementById('app-root');
+            const currentUser = AppState.users.find(u => u.id === AppState.userId);
+            const username = currentUser ? currentUser.username : AppState.userId.slice(-4);
+
+            // Product Status Counts for analytics
+            const productStatusCounts = AppState.products.reduce((acc, product) => {
+                acc[product.status] = (acc[product.status] || 0) + 1;
+                return acc;
+            }, {});
+
+            const statusColors = {
+                'pending_approval': '#f59e0b', /* yellow-500 */
+                'approved': '#22c55e', /* green-500 */
+                'rejected': '#ef4444', /* red-500 */
+            };
+
+            const totalProducts = AppState.products.length;
+
+            // Filter and sort products for Global Product Catalog
+            let filteredAdminProducts = [...AppState.products]; // Make a copy
+
+            // Apply search term filter
+            if (AppState.adminProductFilter.searchTerm) {
+                const searchTermLower = AppState.adminProductFilter.searchTerm.toLowerCase();
+                filteredAdminProducts = filteredAdminProducts.filter(p =>
+                    p.name.toLowerCase().includes(searchTermLower) ||
+                    p.location.toLowerCase().includes(searchTermLower) ||
+                    p.status.toLowerCase().includes(searchTermLower)
+                );
+            }
+
+            // Apply sorting
+            filteredAdminProducts.sort((a, b) => {
+                let valA, valB;
+                switch (AppState.adminProductSort.by) {
+                    case 'name':
+                        valA = a.name.toLowerCase();
+                        valB = b.name.toLowerCase();
+                        break;
+                    case 'quantity':
+                        valA = a.quantity;
+                        valB = b.quantity;
+                        break;
+                    case 'price':
+                        valA = a.adminPrice || a.price;
+                        valB = b.adminPrice || b.price;
+                        break;
+                    case 'status':
+                        valA = a.status.toLowerCase();
+                        valB = b.status.toLowerCase();
+                        break;
+                    default:
+                        valA = a.name.toLowerCase();
+                        valB = b.name.toLowerCase();
+                }
+
+                if (valA < valB) return AppState.adminProductSort.order === 'asc' ? -1 : 1;
+                if (valA > valB) return AppState.adminProductSort.order === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+
+            appRoot.innerHTML = `
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-xl text-gray-900 dark:text-gray-100 min-h-screen">
+                    <h2 class="text-3xl font-bold mb-6 text-indigo-700 dark:text-indigo-400">Zvidambano Trading Dashboard</h2>
+                    <p class="text-lg mb-4">Welcome, Zvidambano Trading ${username}!</p>
+
+                    <!-- Dashboard Overview Cards -->
+                    <div class="dashboard-overview grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                      <div class="card p-6 flex flex-col items-center justify-center">
+                        <h4 class="text-lg font-bold text-green-700 dark:text-green-400 mb-2">Total Products</h4>
+                        <span class="text-3xl font-extrabold">${AppState.products.length}</span>
+                        <div class="text-sm text-gray-500 mt-2">Approved: ${AppState.products.filter(p => p.status === 'approved').length} | Pending: ${AppState.products.filter(p => p.status === 'pending_approval').length}</div>
+                      </div>
+                      <div class="card p-6 flex flex-col items-center justify-center">
+                        <h4 class="text-lg font-bold text-blue-700 dark:text-blue-400 mb-2">Active RFQs</h4>
+                        <span class="text-3xl font-extrabold">${AppState.rfqs.filter(r => r.status !== 'completed').length}</span>
+                      </div>
+                      <div class="card p-6 flex flex-col items-center justify-center">
+                        <h4 class="text-lg font-bold text-purple-700 dark:text-purple-400 mb-2">Quotes Submitted</h4>
+                        <span class="text-3xl font-extrabold">${AppState.quotes.length}</span>
+                      </div>
+                      <div class="card p-6 flex flex-col items-center justify-center">
+                        <h4 class="text-lg font-bold text-yellow-700 dark:text-yellow-400 mb-2">Shipments in Transit</h4>
+                        <span class="text-3xl font-extrabold">${AppState.shipments.filter(s => s.status === 'in-transit').length}</span>
+                      </div>
+                      <div class="card p-6 flex flex-col items-center justify-center">
+                        <h4 class="text-lg font-bold text-indigo-700 dark:text-indigo-400 mb-2">Registered Users</h4>
+                        <span class="text-3xl font-extrabold">${AppState.users.length}</span>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                      <div class="card p-6">
+                        <h4 class="text-lg font-bold mb-4 text-green-700 dark:text-green-400">Analytics (Coming Soon)</h4>
+                        <div class="h-40 flex items-center justify-center text-gray-400">[Charts and graphs will appear here]</div>
+                      </div>
+                      <div class="card p-6">
+                        <h4 class="text-lg font-bold mb-4 text-green-700 dark:text-green-400">Recent Activity</h4>
+                        <ul class="space-y-2 text-sm">
+                          ${AppState.products.slice(-3).map(p => `<li>New product: <span class="font-semibold">${p.name}</span> (${p.status})</li>`).join('')}
+                          ${AppState.rfqs.slice(-2).map(r => `<li>New RFQ: <span class="font-semibold">${r.productName}</span> (${r.status})</li>`).join('')}
+                          ${AppState.shipments.slice(-2).map(s => `<li>Shipment: <span class="font-semibold">${s.id}</span> (${s.status})</li>`).join('')}
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div class="mb-8 border-b border-gray-200 dark:border-gray-700">
+                        <nav class="nav-tabs" aria-label="Tabs">
+                            <button data-tab="products" class="${AppState.adminSelectedTab === 'products' ? 'active' : ''} admin-tab-btn">
+                                Product Approvals
+                            </button>
+                            <button data-tab="rfqs" class="${AppState.adminSelectedTab === 'rfqs' ? 'active' : ''} admin-tab-btn">
+                                RFQs & Quotes
+                            </button>
+                            <button data-tab="shipments" class="${AppState.adminSelectedTab === 'shipments' ? 'active' : ''} admin-tab-btn">
+                                Shipments
+                            </button>
+                            <button data-tab="users" class="${AppState.adminSelectedTab === 'users' ? 'active' : ''} admin-tab-btn">
+                                User Management
+                            </button>
+                            <button data-tab="analytics" class="${AppState.adminSelectedTab === 'analytics' ? 'active' : ''} admin-tab-btn">
+                                Analytics
+                            </button>
+                        </nav>
+                    </div>
+
+                    ${AppState.adminSelectedTab === 'products' ? `
+                        <div class="mb-10 card-inner">
+                            <h3 class="text-2xl font-semibold mb-4 text-indigo-600 dark:text-indigo-300">Product Approval</h3>
+                            ${AppState.products.filter(p => p.status === 'pending_approval').length === 0 ? `
+                                <p class="text-gray-600 dark:text-gray-400">No products pending approval.</p>
+                            ` : `
+                                <div class="space-y-4">
+                                    ${AppState.products.filter(p => p.status === 'pending_approval').map(product => `
+                                        <div class="card p-4 flex flex-col-md-row justify-between items-center">
+                                            <div class="flex-grow mb-2-md-0">
+                                                <h4 class="text-xl font-bold text-gray-800 dark:text-gray-200">${product.name} (${product.quantity} ${product.unit})</h4>
+                                                <p class="text-gray-700 dark:text-gray-300">Supplier: ${AppState.users.find(u => u.id === product.supplierId)?.username || 'Unknown'}</p>
+                                                <p class="text-gray-700 dark:text-gray-300">Location: ${product.location}</p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">Specs: Moisture: ${product.specs?.moisture}%, Protein: ${product.specs?.protein}%</p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">Original Price: $${product.price}/${product.unit}</p>
+                                            </div>
+                                            <div class="flex gap-2">
+                                                <button data-product-id="${product.id}" class="btn btn-success text-sm approve-product-btn">
+                                                    Approve
+                                                </button>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `}
+
+                            <h3 class="text-2xl font-semibold mt-8 mb-4 text-indigo-600 dark:text-indigo-300">Global Product Catalog</h3>
+                            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                                <input type="text" id="adminProductSearch" placeholder="Search by name, location, or status..." value="${AppState.adminProductFilter.searchTerm}">
+                                <select id="adminProductSort" class="flex-1">
+                                    <option value="name_asc" ${AppState.adminProductSort.by === 'name' && AppState.adminProductSort.order === 'asc' ? 'selected' : ''}>Name (A-Z)</option>
+                                    <option value="name_desc" ${AppState.adminProductSort.by === 'name' && AppState.adminProductSort.order === 'desc' ? 'selected' : ''}>Name (Z-A)</option>
+                                    <option value="quantity_asc" ${AppState.adminProductSort.by === 'quantity' && AppState.adminProductSort.order === 'asc' ? 'selected' : ''}>Quantity (Low to High)</option>
+                                    <option value="quantity_desc" ${AppState.adminProductSort.by === 'quantity' && AppState.adminProductSort.order === 'desc' ? 'selected' : ''}>Quantity (High to Low)</option>
+                                    <option value="price_asc" ${AppState.adminProductSort.by === 'price' && AppState.adminProductSort.order === 'asc' ? 'selected' : ''}>Price (Low to High)</option>
+                                    <option value="price_desc" ${AppState.adminProductSort.by === 'price' && AppState.adminProductSort.order === 'desc' ? 'selected' : ''}>Price (High to Low)</option>
+                                    <option value="status_asc" ${AppState.adminProductSort.by === 'status' && AppState.adminProductSort.order === 'asc' ? 'selected' : ''}>Status (A-Z)</option>
+                                    <option value="status_desc" ${AppState.adminProductSort.by === 'status' && AppState.adminProductSort.order === 'desc' ? 'selected' : ''}>Status (Z-A)</option>
+                                </select>
+                            </div>
+                            <button id="exportProductsCSV" class="btn btn-secondary mb-4 text-sm">
+                                Export to CSV
+                            </button>
+                            ${filteredAdminProducts.length === 0 ? `
+                                <p class="text-gray-600 dark:text-gray-400">No products in the catalog matching your criteria.</p>
+                            ` : `
+                                <div class="space-y-4">
+                                    ${filteredAdminProducts.map(product => `
+                                        <div class="card p-4">
+                                            <h4 class="text-xl font-bold text-gray-800 dark:text-gray-200">${product.name}</h4>
+                                            <p class="text-gray-700 dark:text-gray-300">Supplier: ${AppState.users.find(u => u.id === product.supplierId)?.username || 'Unknown'}</p>
+                                            <p class="text-gray-700 dark:text-gray-300">Quantity: ${product.quantity} ${product.unit}</p>
+                                            <p class="text-gray-700 dark:text-gray-300">Price: $${product.price}/${product.unit} (Admin Price: $${product.adminPrice ? product.adminPrice.toFixed(2) : 'N/A'})</p>
+                                            <p class="text-gray-700 dark:text-gray-300">Status: <span style="color: ${statusColors[product.status] || '#6b7280'};" class="font-semibold">${product.status.replace(/_/g, ' ')}</span></p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `}
+                        </div>
+                    ` : ''}
+
+                    ${AppState.adminSelectedTab === 'rfqs' ? `
+                        <div class="mb-10 card-inner">
+                            <h3 class="text-2xl font-semibold mb-4 text-indigo-600 dark:text-indigo-300">All RFQs & Quotes</h3>
+                            <button id="exportRfqsCSV" class="btn btn-secondary mb-4 text-sm">
+                                Export to CSV
+                            </button>
+                            ${AppState.rfqs.length === 0 ? `
+                                <p class="text-gray-600 dark:text-gray-400">No RFQs have been submitted yet.</p>
+                            ` : `
+                                <div class="space-y-6">
+                                    ${AppState.rfqs.map(rfq => `
+                                        <div class="card p-4">
+                                            <h4 class="text-xl font-bold text-gray-800 dark:text-gray-200">RFQ ID: ${rfq.id} for ${rfq.productName}</h4>
+                                            <p class="text-gray-700 dark:text-gray-300">Client: ${AppState.users.find(u => u.id === rfq.clientId)?.username || 'Unknown'}</p>
+                                            <p class="text-gray-700 dark:text-gray-300">Requested Quantity: ${rfq.quantity} ${rfq.unit || 'units'}</p>
+                                            <p class="text-gray-700 dark:text-gray-300">Status: <span class="${
+                                                rfq.status === 'pending' ? 'text-yellow-600' :
+                                                rfq.status === 'quoted' ? 'text-blue-600' :
+                                                'text-green-600'
+                                            } font-semibold">${rfq.status.replace(/_/g, ' ')}</span></p>
+                                            <div class="mt-4 border-t pt-4 border-gray-200 dark:border-gray-600">
+                                                <h5 class="text-lg font-semibold mb-2 text-indigo-500 dark:text-indigo-300">Associated Quotes:</h5>
+                                                ${AppState.quotes.filter(q => q.rfqId === rfq.id).length === 0 ? `
+                                                    <p class="text-gray-600 dark:text-gray-400">No quotes submitted for this RFQ.</p>
+                                                ` : `
+                                                    <div class="space-y-3">
+                                                        ${AppState.quotes.filter(q => q.rfqId === rfq.id).map(quote => `
+                                                            <div class="card-inner p-3">
+                                                                <p class="font-semibold text-gray-800 dark:text-gray-200">Quote by ${AppState.users.find(u => u.id === quote.supplierId)?.username || 'Unknown'}</p>
+                                                                <p class="text-gray-700 dark:text-gray-300">Price: $${quote.pricePerUnit}/${rfq.unit || 'unit'} for ${quote.quantity} ${rfq.unit || 'units'}</p>
+                                                                <p class="text-sm text-gray-600 dark:text-gray-400">Status: <span class="${
+                                                                    quote.status === 'pending' ? 'text-yellow-600' :
+                                                                    quote.status === 'accepted' ? 'text-green-600' :
+                                                                    'text-red-600'
+                                                                } font-semibold">${quote.status}</span></p>
+                                                            </div>
+                                                        `).join('')}
+                                                    </div>
+                                                `}
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `}
+                        </div>
+                    ` : ''}
+
+                    ${AppState.adminSelectedTab === 'shipments' ? `
+                        <div class="mb-10 card-inner">
+                            <h3 class="text-2xl font-semibold mb-4 text-indigo-600 dark:text-indigo-300">All Shipments Overview</h3>
+                            <button id="exportShipmentsCSV" class="btn btn-secondary mb-4 text-sm">
+                                Export to CSV
+                            </button>
+                            ${AppState.shipments.length === 0 ? `
+                                <p class="text-gray-600 dark:text-gray-400">No shipments have been initiated yet.</p>
+                            ` : `
+                                <div class="space-y-4">
+                                    ${AppState.shipments.map(shipment => `
+                                        <div class="card p-4">
+                                            <h4 class="text-xl font-bold text-gray-800 dark:text-gray-200">Shipment ID: ${shipment.id}</h4>
+                                            <p class="text-gray-700 dark:text-gray-300">Product: ${AppState.products.find(p => p.id === shipment.productId)?.name || 'N/A'}</p>
+                                            <p class="text-gray-700 dark:text-gray-300">Client: ${AppState.users.find(u => u.id === shipment.clientId)?.username || 'Unknown'}</p>
+                                            <p class="text-gray-700 dark:text-gray-300">Supplier: ${AppState.users.find(u => u.id === shipment.supplierId)?.username || 'Unknown'}</p>
+                                            <p class="text-gray-700 dark:text-gray-300">Status: <span class="${
+                                                shipment.status === 'pending' ? 'text-yellow-600' :
+                                                shipment.status === 'in-transit' ? 'text-blue-600' :
+                                                'text-green-600'
+                                            } font-semibold">${shipment.status.replace(/-/g, ' ')}</span></p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Tracking: ${shipment.tracking}</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Last Update: ${new Date(shipment.lastUpdate).toLocaleDateString()}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `}
+                        </div>
+                    ` : ''}
+
+                    ${AppState.adminSelectedTab === 'users' ? `
+                        <div class="mb-10 card-inner">
+                            <h3 class="text-2xl font-semibold mb-4 text-indigo-600 dark:text-indigo-300">User Management</h3>
+                            <button id="exportUsersCSV" class="btn btn-secondary mb-4 text-sm">
+                                Export to CSV
+                            </button>
+                            ${AppState.users.length === 0 ? `
+                                <p class="text-gray-600 dark:text-gray-400">No users registered yet.</p>
+                            ` : `
+                                <div class="space-y-4">
+                                    ${AppState.users.map(user => `
+                                        <div class="card p-4 flex justify-between items-center">
+                                            <div>
+                                                <h4 class="text-xl font-bold text-gray-800 dark:text-gray-200">${user.username} (${user.role === 'admin' ? 'Zvidambano Trading' : user.role})</h4>
+                                                <p class="text-gray-700 dark:text-gray-300">ID: ${user.id}</p>
+                                                <p class="text-gray-700 dark:text-gray-300">Email: ${user.email}</p>
+                                                <p class="text-gray-700 dark:text-gray-300">Status: <span class="${
+                                                    user.isActive ? 'text-green-600' : 'text-red-600'
+                                                } font-semibold">${user.isActive ? 'Active' : 'Inactive'}</span></p>
+                                            </div>
+                                            <button data-user-id="${user.id}" class="btn ${user.isActive ? 'btn-warning' : 'btn-success'} text-sm toggle-user-status-btn">
+                                                ${user.isActive ? 'Deactivate' : 'Activate'}
+                                            </button>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `}
+                        </div>
+                    ` : ''}
+
+                    ${AppState.adminSelectedTab === 'analytics' ? `
+                        <div class="mb-10 card-inner">
+                            <h3 class="text-2xl font-semibold mb-4 text-indigo-600 dark:text-indigo-300">Analytics & Reporting</h3>
+
+                            <div class="mb-8 card p-4">
+                                <h4 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-200">Product Status Distribution</h4>
+                                ${totalProducts === 0 ? `
+                                    <p class="text-gray-600 dark:text-gray-400">No product data to display analytics.</p>
+                                ` : `
+                                    <div class="bar-chart-container">
+                                        ${Object.entries(productStatusCounts).map(([status, count]) => {
+                                            const percentage = (count / totalProducts) * 100;
+                                            return `
+                                                <div class="bar-chart-bar" style="height: ${percentage}%; background-color: ${statusColors[status] || '#6b7280'};">
+                                                    <span class="percentage">${percentage.toFixed(0)}%</span>
+                                                    <span class="label">${status.replace(/_/g, ' ')}</span>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                `}
+                            </div>
+
+                            <div class="card p-4">
+                                <h4 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-200">RFQ/Order Volume Trends (Placeholder)</h4>
+                                <p class="text-gray-600 dark:text-gray-400">This section would show trends over time with charts (e.g., D3.js or Recharts).</p>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+                
+            `;
+
+            // Attach event listeners for dashboard content (excluding logout/dark mode which are in header)
+            document.querySelectorAll('.admin-tab-btn').forEach(button => {
+                button.addEventListener('click', (e) => setAdminTab(e.target.dataset.tab));
+            });
+
+            document.querySelectorAll('.approve-product-btn').forEach(button => {
+                button.addEventListener('click', (e) => approveAdminProduct(e.target.dataset.productId));
+            });
+
+            document.querySelectorAll('.toggle-user-status-btn').forEach(button => {
+                button.addEventListener('click', (e) => toggleAdminUserStatus(e.target.dataset.userId));
+            });
+
+            document.getElementById('exportProductsCSV').addEventListener('click', () => exportAdminData('products', 'product_catalog.csv'));
+            document.getElementById('exportRfqsCSV').addEventListener('click', () => exportAdminData('rfqs', 'rfq_quotes_overview.csv'));
+            document.getElementById('exportShipmentsCSV').addEventListener('click', () => exportAdminData('shipments', 'shipments_overview.csv'));
+            document.getElementById('exportUsersCSV').addEventListener('click', () => exportAdminData('users', 'user_list.csv'));
+
+
+            document.getElementById('adminProductSearch').addEventListener('input', (e) => {
+                AppState.adminProductFilter.searchTerm = e.target.value;
+                publish('adminProductFilterChanged');
+            });
+            document.getElementById('adminProductSort').addEventListener('change', (e) => {
+                const [by, order] = e.target.value.split('_');
+                AppState.adminProductSort.by = by;
+                AppState.adminProductSort.order = order;
+                publish('adminProductSortChanged');
+            });
+        }
+
+
+        // --- Page Navigation / Routing ---
+        function navigateTo(page) {
+            AppState.currentPage = page;
+            renderApp(); // Rerender the whole app to show the new page
+        }
+
+        function navigateToDashboard() {
+            // Based on role, determine which dashboard page to show
+            switch (AppState.userRole) {
+                case 'client':
+                    navigateTo('clientDashboard');
+                    break;
+                case 'supplier':
+                    navigateTo('supplierDashboard');
+                    break;
+                case 'admin':
+                    navigateTo('adminDashboard');
+                    break;
+                default:
+                    navigateTo('login');
+            }
+        }
+
+
+        // --- Main Render Function ---
+        function renderApp() {
+            const header = document.getElementById('main-header');
+            const navDarkModeToggleBtn = document.getElementById('navDarkModeToggleBtn');
+
+            if (AppState.isAuthenticated) {
+                header.style.display = 'block'; // Show header if authenticated
+                // Attach header event listeners if not already attached (or re-attach for safety)
+                document.getElementById('navHomeBtn').addEventListener('click', navigateToDashboard);
+                document.getElementById('navLogoutBtn').addEventListener('click', () => logout());
+                // Ensure the dark mode toggle button exists before attaching event listener
+                if (navDarkModeToggleBtn) {
+                    navDarkModeToggleBtn.addEventListener('click', toggleDarkMode);
+                    // Update dark mode SVG icon in header
+                    navDarkModeToggleBtn.innerHTML = AppState.isDarkMode ?
+                        '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h1M4 12H3m15.325 5.924l-.707.707M6.707 6.707l-.707-.707m12.728 0l-.707-.707M6.707 17.293l-.707.707M6 12a6 6 0 1112 0A6 6 0 016 12z" /></svg>' :
+                        '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>';
+                }
+
+
+                // Render the specific dashboard based on currentPage
+                switch (AppState.currentPage) {
+                    case 'clientDashboard':
+                        renderClientDashboard();
+                        break;
+                    case 'supplierDashboard':
+                        renderSupplierDashboard();
+                        break;
+                    case 'adminDashboard':
+                        renderAdminDashboard();
+                        break;
+                    default: // Fallback to dashboard if currentPage is not explicitly set after login
+                        navigateToDashboard();
+                }
+            } else {
+                header.style.display = 'none'; // Hide header if not authenticated
+                renderLoginPage();
+            }
+        }
+
+        // --- Initialize Application ---
+        window.onload = function() {
+            loadState(); // Load state from localStorage on page load
+            // Determine initial page based on authentication status
+            AppState.currentPage = AppState.isAuthenticated ? (AppState.userRole + 'Dashboard') : 'login';
+            renderApp(); // Initial render
+            // Subscribe to state changes to trigger re-renders
+            subscribe('authChange', renderApp);
+            subscribe('productsUpdated', renderApp);
+            subscribe('rfqsUpdated', renderApp);
+            subscribe('quotesUpdated', renderApp);
+            subscribe('shipmentsUpdated', renderApp);
+            subscribe('usersUpdated', renderApp);
+            subscribe('watchlistUpdated', renderApp);
+            subscribe('clientProductFilterChanged', renderClientDashboard); // Specific re-render for client products
+            subscribe('clientProductSortChanged', renderClientDashboard); // Specific re-render for client products
+            subscribe('adminProductFilterChanged', renderAdminDashboard); // Specific re-render for admin products
+            subscribe('adminProductSortChanged', renderAdminDashboard); // Specific re-render for admin products
+        };
+
+    </script>
+</body>
+</html>
